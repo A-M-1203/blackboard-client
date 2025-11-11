@@ -14,6 +14,7 @@ if (canvas.getContext) {
     brushSelected: false,
     rectangleSelected: false,
     circleSelected: false,
+    equilateralTriangleSelected: false,
 
     // starting coordinates for drawing shapes (rectangle, circle...)
     shapeStartX: 0,
@@ -27,8 +28,8 @@ if (canvas.getContext) {
 
   context.strokeStyle = "rgb(255 255 255)";
   context.lineWidth = state.pencilLineWidth;
-  window.onkeydown = (e) => {
-    switch (e.key) {
+  window.onkeydown = (event) => {
+    switch (event.key) {
       case "r":
         context.strokeStyle = "rgb(255 0 0)";
         break;
@@ -67,6 +68,7 @@ if (canvas.getContext) {
         state.brushSelected = false;
         state.rectangleSelected = false;
         state.circleSelected = false;
+        state.equilateralTriangleSelected = false;
         context.lineWidth = state.pencilLineWidth;
         console.log(`Pencil line width: ${context.lineWidth}`);
         break;
@@ -75,6 +77,7 @@ if (canvas.getContext) {
         state.pencilSelected = false;
         state.rectangleSelected = false;
         state.circleSelected = false;
+        state.equilateralTriangleSelected = false;
         context.lineWidth = state.brushLineWidth;
         console.log(`Brush line width: ${context.lineWidth}`);
         break;
@@ -83,6 +86,7 @@ if (canvas.getContext) {
         state.pencilSelected = false;
         state.brushSelected = false;
         state.circleSelected = false;
+        state.equilateralTriangleSelected = false;
         context.lineWidth = state.shapeLineWidth;
         console.log(`Shape line width: ${context.lineWidth}`);
         break;
@@ -91,15 +95,25 @@ if (canvas.getContext) {
         state.pencilSelected = false;
         state.brushSelected = false;
         state.rectangleSelected = false;
+        state.equilateralTriangleSelected = false;
+        context.lineWidth = state.shapeLineWidth;
+        console.log(`Shape line width: ${context.lineWidth}`);
+        break;
+      case "T":
+        state.equilateralTriangleSelected = true;
+        state.pencilSelected = false;
+        state.brushSelected = false;
+        state.rectangleSelected = false;
+        state.circleSelected = false;
         context.lineWidth = state.shapeLineWidth;
         console.log(`Shape line width: ${context.lineWidth}`);
         break;
     }
   };
 
-  canvas.onmousemove = (e) => {
-    state.mouseX = e.clientX;
-    state.mouseY = e.clientY;
+  canvas.onmousemove = (event) => {
+    state.mouseX = event.clientX;
+    state.mouseY = event.clientY;
 
     if (state.mouseClicked) {
       if (state.rectangleSelected) {
@@ -131,6 +145,43 @@ if (canvas.getContext) {
           2 * Math.PI
         );
         context.stroke();
+      } else if (state.equilateralTriangleSelected) {
+        context.putImageData(state.contextImageData, 0, 0);
+
+        const centroidCircleRadius = Math.sqrt(
+          (state.mouseX - state.shapeStartX) *
+            (state.mouseX - state.shapeStartX) +
+            (state.mouseY - state.shapeStartY) *
+              (state.mouseY - state.shapeStartY)
+        );
+
+        const cx = state.shapeStartX;
+        const cy = state.shapeStartY - centroidCircleRadius;
+
+        const ax =
+          state.shapeStartX +
+          (cx - state.shapeStartX) * Math.cos(120 * (Math.PI / 180)) -
+          (cy - state.shapeStartY) * Math.sin(120 * (Math.PI / 180));
+        const ay =
+          state.shapeStartY +
+          (cx - state.shapeStartX) * Math.sin(120 * (Math.PI / 180)) +
+          (cy - state.shapeStartY) * Math.cos(120 * (Math.PI / 180));
+
+        const bx =
+          state.shapeStartX +
+          (cx - state.shapeStartX) * Math.cos(240 * (Math.PI / 180)) -
+          (cy - state.shapeStartY) * Math.sin(240 * (Math.PI / 180));
+        const by =
+          state.shapeStartY +
+          (cx - state.shapeStartX) * Math.sin(240 * (Math.PI / 180)) +
+          (cy - state.shapeStartY) * Math.cos(240 * (Math.PI / 180));
+
+        context.beginPath();
+        context.moveTo(cx, cy);
+        context.lineTo(ax, ay);
+        context.lineTo(bx, by);
+        context.lineTo(cx, cy);
+        context.stroke();
       } else {
         // pencil or brush selected
         context.lineTo(state.mouseX, state.mouseY);
@@ -139,11 +190,15 @@ if (canvas.getContext) {
     }
   };
 
-  canvas.onmousedown = (e) => {
+  canvas.onmousedown = (event) => {
     state.mouseClicked = true;
-    if (state.rectangleSelected || state.circleSelected) {
-      state.shapeStartX = e.clientX;
-      state.shapeStartY = e.clientY;
+    if (
+      state.rectangleSelected ||
+      state.circleSelected ||
+      state.equilateralTriangleSelected
+    ) {
+      state.shapeStartX = event.clientX;
+      state.shapeStartY = event.clientY;
       state.contextImageData = context.getImageData(
         0,
         0,
@@ -184,6 +239,41 @@ if (canvas.getContext) {
         0,
         2 * Math.PI
       );
+      context.stroke();
+    } else if (state.equilateralTriangleSelected) {
+      const centroidCircleRadius = Math.sqrt(
+        (state.mouseX - state.shapeStartX) *
+          (state.mouseX - state.shapeStartX) +
+          (state.mouseY - state.shapeStartY) *
+            (state.mouseY - state.shapeStartY)
+      );
+
+      const cx = state.shapeStartX;
+      const cy = state.shapeStartY - centroidCircleRadius;
+
+      const ax =
+        state.shapeStartX +
+        (cx - state.shapeStartX) * Math.cos(120 * (Math.PI / 180)) -
+        (cy - state.shapeStartY) * Math.sin(120 * (Math.PI / 180));
+      const ay =
+        state.shapeStartY +
+        (cx - state.shapeStartX) * Math.sin(120 * (Math.PI / 180)) +
+        (cy - state.shapeStartY) * Math.cos(120 * (Math.PI / 180));
+
+      const bx =
+        state.shapeStartX +
+        (cx - state.shapeStartX) * Math.cos(240 * (Math.PI / 180)) -
+        (cy - state.shapeStartY) * Math.sin(240 * (Math.PI / 180));
+      const by =
+        state.shapeStartY +
+        (cx - state.shapeStartX) * Math.sin(240 * (Math.PI / 180)) +
+        (cy - state.shapeStartY) * Math.cos(240 * (Math.PI / 180));
+
+      context.beginPath();
+      context.moveTo(cx, cy);
+      context.lineTo(ax, ay);
+      context.lineTo(bx, by);
+      context.lineTo(cx, cy);
       context.stroke();
     }
   };
