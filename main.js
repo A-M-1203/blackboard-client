@@ -12,11 +12,12 @@ if (canvas.getContext) {
     mouseClicked: false,
     pencilSelected: true,
     brushSelected: false,
+    lineSelected: false,
     rectangleSelected: false,
     circleSelected: false,
     equilateralTriangleSelected: false,
 
-    // starting coordinates for drawing shapes (rectangle, circle...)
+    // starting coordinates for drawing shapes (line, rectangle, circle...)
     shapeStartX: 0,
     shapeStartY: 0,
     contextImageData: null,
@@ -80,6 +81,16 @@ if (canvas.getContext) {
         state.equilateralTriangleSelected = false;
         context.lineWidth = state.brushLineWidth;
         console.log(`Brush line width: ${context.lineWidth}`);
+        break;
+      case "L":
+        state.lineSelected = true;
+        state.pencilSelected = false;
+        state.brushSelected = false;
+        state.rectangleSelected = false;
+        state.circleSelected = false;
+        state.equilateralTriangleSelected = false;
+        context.lineWidth = state.shapeLineWidth;
+        console.log(`Shape line width: ${context.lineWidth}`);
         break;
       case "R":
         state.rectangleSelected = true;
@@ -182,6 +193,12 @@ if (canvas.getContext) {
         context.lineTo(bx, by);
         context.lineTo(cx, cy);
         context.stroke();
+      } else if (state.lineSelected) {
+        context.putImageData(state.contextImageData, 0, 0);
+        context.beginPath();
+        context.moveTo(state.shapeStartX, state.shapeStartY);
+        context.lineTo(state.mouseX, state.mouseY);
+        context.stroke();
       } else {
         // pencil or brush selected
         context.lineTo(state.mouseX, state.mouseY);
@@ -193,6 +210,7 @@ if (canvas.getContext) {
   canvas.onmousedown = (event) => {
     state.mouseClicked = true;
     if (
+      state.lineSelected ||
       state.rectangleSelected ||
       state.circleSelected ||
       state.equilateralTriangleSelected
@@ -206,6 +224,7 @@ if (canvas.getContext) {
         canvas.height
       );
     }
+    // for drawing with pen
     context.beginPath();
     context.moveTo(state.mouseX, state.mouseY);
   };
@@ -274,6 +293,11 @@ if (canvas.getContext) {
       context.lineTo(ax, ay);
       context.lineTo(bx, by);
       context.lineTo(cx, cy);
+      context.stroke();
+    } else if (state.lineSelected) {
+      context.beginPath();
+      context.moveTo(state.shapeStartX, state.shapeStartY);
+      context.lineTo(state.mouseX, state.mouseY);
       context.stroke();
     }
   };
