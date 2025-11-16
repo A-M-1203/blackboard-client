@@ -51,6 +51,10 @@ if (canvas.getContext) {
           state.shapeLineWidth -= 1.0;
         }
         break;
+      case "H":
+        state.selectHand();
+        console.log("Hand selected");
+        break;
       case "P":
         state.selectPencil();
         console.log(`Pencil line width: ${state.context.lineWidth}`);
@@ -82,12 +86,52 @@ if (canvas.getContext) {
     }
   };
 
+  canvas.onmousedown = (event) => {
+    state.mouseDown = true;
+    if (state.handSelected) {
+      for (const shape of state.shapes) {
+        if (shape.clicked(event.x, event.y)) {
+          state.draggingShape = shape;
+          state.draggingOffsetX = event.x - shape.x;
+          state.draggingOffsetY = event.y - shape.y;
+          break;
+        }
+      }
+    } else if (state.pencilSelected || state.brushSelected) {
+      state.context.beginPath();
+      state.context.moveTo(event.x, event.y);
+    } else if (
+      state.lineSelected ||
+      state.rectangleSelected ||
+      state.circleSelected ||
+      state.equilateralTriangleSelected
+    ) {
+      state.shapeStartX = event.x;
+      state.shapeStartY = event.y;
+      state.contextImageData = state.context.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+    }
+  };
+
   canvas.onmousemove = (event) => {
     state.mouseX = event.x;
     state.mouseY = event.y;
 
-    if (state.mouseClicked) {
-      if (state.eraserSelected) {
+    if (state.mouseDown) {
+      if (state.handSelected && state.draggingShape) {
+        state.draggingShape.x = event.x - state.draggingOffsetX;
+        state.draggingShape.y = event.y - state.draggingOffsetY;
+
+        state.context.clearRect(0, 0, canvas.width, canvas.height);
+        state.shapes.forEach((shape) => shape.draw());
+      } else if (state.pencilSelected || state.brushSelected) {
+        state.context.lineTo(event.x, event.y);
+        state.context.stroke();
+      } else if (state.eraserSelected) {
         state.context.clearRect(
           event.x - state.eraserSize,
           event.y - state.eraserSize,
@@ -141,38 +185,13 @@ if (canvas.getContext) {
           event.y,
           state
         );
-      } else {
-        // pencil or brush selected
-        state.context.lineTo(event.x, event.y);
-        state.context.stroke();
       }
     }
   };
 
-  canvas.onmousedown = (event) => {
-    state.mouseClicked = true;
-    if (
-      state.lineSelected ||
-      state.rectangleSelected ||
-      state.circleSelected ||
-      state.equilateralTriangleSelected
-    ) {
-      state.shapeStartX = event.x;
-      state.shapeStartY = event.y;
-      state.contextImageData = state.context.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-    }
-    // for drawing with pen
-    state.context.beginPath();
-    state.context.moveTo(event.x, event.y);
-  };
-
   canvas.onmouseup = (event) => {
-    state.mouseClicked = false;
+    state.draggingShape = undefined;
+    state.mouseDown = false;
     if (state.rectangleSelected) {
       const width = event.x - state.shapeStartX;
       const height = event.y - state.shapeStartY;
@@ -190,7 +209,7 @@ if (canvas.getContext) {
 
       rectangle.draw();
       state.shapes.push(rectangle);
-      console.log(state.shapes);
+      // console.log(state.shapes);
     } else if (state.circleSelected) {
       const radius = Math.sqrt(
         (event.x - state.shapeStartX) * (event.x - state.shapeStartX) +
@@ -209,7 +228,7 @@ if (canvas.getContext) {
 
       circle.draw();
       state.shapes.push(circle);
-      console.log(state.shapes);
+      // console.log(state.shapes);
     } else if (state.equilateralTriangleSelected) {
       const centroidRadius = Math.sqrt(
         (event.x - state.shapeStartX) * (event.x - state.shapeStartX) +
@@ -228,7 +247,7 @@ if (canvas.getContext) {
 
       triangle.draw();
       state.shapes.push(triangle);
-      console.log(state.shapes);
+      // console.log(state.shapes);
     } else if (state.lineSelected) {
       const line = new Line(
         state.context,
@@ -243,7 +262,7 @@ if (canvas.getContext) {
 
       line.draw();
       state.shapes.push(line);
-      console.log(state.shapes);
+      // console.log(state.shapes);
     }
   };
 } else {

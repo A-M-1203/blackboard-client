@@ -8,7 +8,11 @@ class State {
     this.brushLineWidth = 1.0;
     this.shapeLineWidth = 1.0;
     this.eraserSize = 10;
-    this.mouseClicked = false;
+    this.mouseDown = false;
+    this.draggingShape = undefined;
+    this.draggingOffsetX = undefined;
+    this.draggingOffsetY = undefined;
+    this.handSelected = false;
     this.pencilSelected = true;
     this.brushSelected = false;
     this.eraserSelected = false;
@@ -29,6 +33,7 @@ class State {
 
   selectPencil() {
     this.pencilSelected = true;
+    this.handSelected = false;
     this.brushSelected = false;
     this.eraserSelected = false;
     this.rectangleSelected = false;
@@ -40,6 +45,7 @@ class State {
 
   selectBrush() {
     this.brushSelected = true;
+    this.handSelected = false;
     this.pencilSelected = false;
     this.eraserSelected = false;
     this.rectangleSelected = false;
@@ -51,6 +57,7 @@ class State {
 
   selectEraser() {
     this.eraserSelected = true;
+    this.handSelected = false;
     this.pencilSelected = false;
     this.brushSelected = false;
     this.rectangleSelected = false;
@@ -61,8 +68,9 @@ class State {
 
   selectRectangle() {
     this.rectangleSelected = true;
-    this.brushSelected = false;
+    this.handSelected = false;
     this.pencilSelected = false;
+    this.brushSelected = false;
     this.eraserSelected = false;
     this.circleSelected = false;
     this.equilateralTriangleSelected = false;
@@ -72,8 +80,9 @@ class State {
 
   selectCircle() {
     this.circleSelected = true;
-    this.brushSelected = false;
+    this.handSelected = false;
     this.pencilSelected = false;
+    this.brushSelected = false;
     this.eraserSelected = false;
     this.rectangleSelected = false;
     this.equilateralTriangleSelected = false;
@@ -83,8 +92,9 @@ class State {
 
   selectEquilateralTriangle() {
     this.equilateralTriangleSelected = true;
-    this.brushSelected = false;
+    this.handSelected = false;
     this.pencilSelected = false;
+    this.brushSelected = false;
     this.eraserSelected = false;
     this.rectangleSelected = false;
     this.circleSelected = false;
@@ -94,13 +104,25 @@ class State {
 
   selectLine() {
     this.lineSelected = true;
-    this.brushSelected = false;
+    this.handSelected = false;
     this.pencilSelected = false;
+    this.brushSelected = false;
     this.eraserSelected = false;
     this.rectangleSelected = false;
     this.circleSelected = false;
     this.equilateralTriangleSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
+  }
+
+  selectHand() {
+    this.handSelected = true;
+    this.pencilSelected = false;
+    this.brushSelected = false;
+    this.eraserSelected = false;
+    this.rectangleSelected = false;
+    this.circleSelected = false;
+    this.equilateralTriangleSelected = false;
+    this.lineSelected = false;
   }
 }
 

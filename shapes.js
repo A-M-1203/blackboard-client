@@ -37,7 +37,18 @@ export class Rectangle extends Shape {
     context.closePath();
   }
 
-  clicked() {}
+  clicked(x, y) {
+    const top = this.y;
+    const bottom = this.height + this.y;
+    const left = this.x;
+    const right = this.width + this.x;
+
+    if (x > left && x < right && y > top && y < bottom) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 export class Circle extends Shape {
@@ -69,7 +80,17 @@ export class Circle extends Shape {
     context.closePath();
   }
 
-  clicked() {}
+  clicked(x, y) {
+    const distance = Math.sqrt(
+      (x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)
+    );
+
+    if (distance < this.radius) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 export class EquilateralTriangle extends Shape {
@@ -118,9 +139,8 @@ export class EquilateralTriangle extends Shape {
     this.context.moveTo(cx, cy);
     this.context.lineTo(ax, ay);
     this.context.lineTo(bx, by);
-    this.context.lineTo(cx, cy);
-    this.context.stroke();
     this.context.closePath();
+    this.context.stroke();
 
     this.context.restore();
   }
@@ -152,12 +172,21 @@ export class EquilateralTriangle extends Shape {
     context.moveTo(cx, cy);
     context.lineTo(ax, ay);
     context.lineTo(bx, by);
-    context.lineTo(cx, cy);
-    context.stroke();
     context.closePath();
+    context.stroke();
   }
 
-  clicked() {}
+  clicked(x, y) {
+    const distance = Math.sqrt(
+      (x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)
+    );
+
+    if (distance < this.centroidRadius) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 export class Line extends Shape {
