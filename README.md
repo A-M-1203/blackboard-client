@@ -1,2 +1,4 @@
 # blackboard-client
-Web application for collaborative drawing
+
+Simple web application for drawing in the browser.
+
