@@ -24,6 +24,7 @@ export class Rectangle extends Shape {
     this.context.lineWidth = this.lineWidth;
 
     this.context.beginPath();
+    this.context.fillRect(this.x, this.y, this.width, this.height);
     this.context.strokeRect(this.x, this.y, this.width, this.height);
     this.context.closePath();
 
@@ -66,6 +67,7 @@ export class Circle extends Shape {
 
     this.context.beginPath();
     this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    this.context.fill();
     this.context.stroke();
     this.context.closePath();
 
@@ -140,6 +142,7 @@ export class EquilateralTriangle extends Shape {
     this.context.lineTo(ax, ay);
     this.context.lineTo(bx, by);
     this.context.closePath();
+    this.context.fill();
     this.context.stroke();
 
     this.context.restore();
