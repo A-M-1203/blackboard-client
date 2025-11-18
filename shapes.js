@@ -38,9 +38,9 @@ export class Rectangle extends Shape {
     context.closePath();
   }
 
-  drawClickedOutline() {
+  drawClickedOutline(outlineColor) {
     const oldStrokeStyle = this.context.strokeStyle;
-    this.context.strokeStyle = "#ffffff";
+    this.context.strokeStyle = outlineColor;
     this.context.setLineDash([5, 3]);
     this.context.strokeRect(
       this.x - 10,
@@ -96,9 +96,9 @@ export class Circle extends Shape {
     context.closePath();
   }
 
-  drawClickedOutline() {
+  drawClickedOutline(outlineColor) {
     const oldStrokeStyle = this.context.strokeStyle;
-    this.context.strokeStyle = "#ffffff";
+    this.context.strokeStyle = outlineColor;
     this.context.setLineDash([5, 3]);
     this.context.strokeRect(
       this.x - this.radius - 10,
@@ -207,9 +207,9 @@ export class EquilateralTriangle extends Shape {
     context.stroke();
   }
 
-  drawClickedOutline() {
+  drawClickedOutline(outlineColor) {
     const oldStrokeStyle = this.context.strokeStyle;
-    this.context.strokeStyle = "#ffffff";
+    this.context.strokeStyle = outlineColor;
     this.context.setLineDash([5, 3]);
     this.context.strokeRect(
       this.x - this.centroidRadius - 10,
@@ -226,7 +226,7 @@ export class EquilateralTriangle extends Shape {
       (x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)
     );
 
-    if (distance < this.centroidRadius) {
+    if (distance < this.centroidRadius / 1.2) {
       return true;
     }
 

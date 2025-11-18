@@ -7,7 +7,8 @@ class State {
     this.brushColor = "#ffffff";
     this.strokeColor = "#ffffff";
     this.fillColor = "#000000";
-    this.clickedOutlineColor = "#ffffff";
+    // color of the dashed line when shape is selected
+    this.outlineColor = "#ffffff";
     this.pencilLineWidth = 1.0;
     this.brushLineWidth = 1.0;
     this.shapeLineWidth = 1.0;
@@ -31,7 +32,6 @@ class State {
     // starting coordinates for drawing shapes (line, rectangle, circle...)
     this.shapeStartX = 0;
     this.shapeStartY = 0;
-    this.shapeSelectImageData = undefined;
     this.contextImageData = undefined;
     // all rendered shapes on the canvas
     this.shapes = [];
@@ -50,7 +50,7 @@ class State {
     this.shapes.forEach((shape) => shape.draw());
 
     if (this.selectedShape) {
-      this.selectedShape.drawClickedOutline();
+      this.selectedShape.drawClickedOutline(this.outlineColor);
     }
   }
 
@@ -67,8 +67,24 @@ class State {
     return false;
   }
 
+  setShapeLineColor(lineColor) {
+    if (this.selectedShape) {
+      this.selectedShape.strokeColor = lineColor;
+      this.redrawCanvas();
+    }
+  }
+
+  setShapeLineWidth(lineWidth) {
+    if (this.selectedShape && lineWidth > 0 && lineWidth < 248.0) {
+      this.selectedShape.lineWidth = lineWidth;
+      this.redrawCanvas();
+    }
+  }
+
   setColor(color) {
-    if (this.pencilSelected) {
+    if (state.selectSelected) {
+      this.setShapeLineColor(color);
+    } else if (this.pencilSelected) {
       this.context.strokeStyle = this.pencilColor = color;
       console.log("------------------------------------------------");
       console.log(`Pencil color set to: ${this.context.strokeStyle}`);
@@ -93,7 +109,9 @@ class State {
   }
 
   incrementLineWidth() {
-    if (state.pencilSelected && state.pencilLineWidth < 248.0) {
+    if (this.selectSelected) {
+      this.setShapeLineWidth(this.selectedShape.lineWidth + 1);
+    } else if (state.pencilSelected && state.pencilLineWidth < 248.0) {
       state.context.lineWidth = state.pencilLineWidth += 1.0;
       console.log("------------------------------------------------");
       console.log(`Pencil line width is: ${this.context.lineWidth}`);
@@ -112,7 +130,9 @@ class State {
   }
 
   decrementLineWidth() {
-    if (state.pencilSelected && state.pencilLineWidth > 1.0) {
+    if (this.selectSelected) {
+      this.setShapeLineWidth(this.selectedShape.lineWidth - 1);
+    } else if (state.pencilSelected && state.pencilLineWidth > 1.0) {
       state.context.lineWidth = state.pencilLineWidth -= 1.0;
       console.log("------------------------------------------------");
       console.log(`Pencil line width is: ${this.context.lineWidth}`);
