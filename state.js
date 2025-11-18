@@ -7,15 +7,18 @@ class State {
     this.brushColor = "#ffffff";
     this.strokeColor = "#ffffff";
     this.fillColor = "#000000";
+    this.clickedOutlineColor = "#ffffff";
     this.pencilLineWidth = 1.0;
     this.brushLineWidth = 1.0;
     this.shapeLineWidth = 1.0;
     this.eraserSize = 10;
     this.mouseDown = false;
+    this.selectedShape = undefined;
+    this.prevSelectedShape = undefined;
     this.draggingShape = undefined;
     this.draggingOffsetX = undefined;
     this.draggingOffsetY = undefined;
-    this.handSelected = false;
+    this.selectSelected = false;
     this.pencilSelected = true;
     this.fillSelected = false;
     this.brushSelected = false;
@@ -28,11 +31,27 @@ class State {
     // starting coordinates for drawing shapes (line, rectangle, circle...)
     this.shapeStartX = 0;
     this.shapeStartY = 0;
+    this.shapeSelectImageData = undefined;
     this.contextImageData = undefined;
     // all rendered shapes on the canvas
     this.shapes = [];
     // all paths on the canvas (used for undo/redo)
     this.paths = [];
+  }
+
+  redrawCanvas() {
+    this.context.clearRect(
+      0,
+      0,
+      this.context.canvas.width,
+      this.context.canvas.height
+    );
+
+    this.shapes.forEach((shape) => shape.draw());
+
+    if (this.selectedShape) {
+      this.selectedShape.drawClickedOutline();
+    }
   }
 
   shapeSelected() {
@@ -111,8 +130,8 @@ class State {
     }
   }
 
-  selectHand() {
-    this.handSelected = true;
+  selectSelect() {
+    this.selectSelected = true;
     this.pencilSelected = false;
     this.brushSelected = false;
     this.fillSelected = false;
@@ -122,13 +141,13 @@ class State {
     this.equilateralTriangleSelected = false;
     this.lineSelected = false;
     console.log("------------------------------------------------");
-    console.log("Hand selected");
+    console.log("Select selected");
     console.log("------------------------------------------------");
   }
 
   selectPencil() {
     this.pencilSelected = true;
-    this.handSelected = false;
+    this.selectSelected = false;
     this.brushSelected = false;
     this.fillSelected = false;
     this.eraserSelected = false;
@@ -138,6 +157,7 @@ class State {
     this.lineSelected = false;
     this.context.lineWidth = this.pencilLineWidth;
     this.context.strokeStyle = this.pencilColor;
+    this.selectedShape = undefined;
     console.log("------------------------------------------------");
     console.log("Pencil selected");
     console.log(`Pencil line width: ${this.context.lineWidth}`);
@@ -147,7 +167,7 @@ class State {
 
   selectBrush() {
     this.brushSelected = true;
-    this.handSelected = false;
+    this.selectSelected = false;
     this.pencilSelected = false;
     this.fillSelected = false;
     this.eraserSelected = false;
@@ -157,6 +177,7 @@ class State {
     this.lineSelected = false;
     this.context.lineWidth = this.brushLineWidth;
     this.context.strokeStyle = this.brushColor;
+    this.selectedShape = undefined;
     console.log("------------------------------------------------");
     console.log("Brush selected");
     console.log(`Brush line width: ${this.context.lineWidth}`);
@@ -166,7 +187,7 @@ class State {
 
   selectFill() {
     this.fillSelected = true;
-    this.handSelected = false;
+    this.selectSelected = false;
     this.pencilSelected = false;
     this.brushSelected = false;
     this.eraserSelected = false;
@@ -175,6 +196,7 @@ class State {
     this.equilateralTriangleSelected = false;
     this.lineSelected = false;
     this.context.fillStyle = this.fillColor;
+    this.selectedShape = undefined;
     console.log("------------------------------------------------");
     console.log("Fill selected");
     console.log(`Fill color: ${this.context.fillStyle}`);
@@ -183,7 +205,7 @@ class State {
 
   selectRectangle() {
     this.rectangleSelected = true;
-    this.handSelected = false;
+    this.selectSelected = false;
     this.pencilSelected = false;
     this.brushSelected = false;
     this.fillSelected = false;
@@ -193,6 +215,7 @@ class State {
     this.lineSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
+    this.selectedShape = undefined;
     console.log("------------------------------------------------");
     console.log("Rectangle selected");
     console.log(`Rectangle line width: ${this.context.lineWidth}`);
@@ -203,7 +226,7 @@ class State {
 
   selectCircle() {
     this.circleSelected = true;
-    this.handSelected = false;
+    this.selectSelected = false;
     this.pencilSelected = false;
     this.brushSelected = false;
     this.fillSelected = false;
@@ -213,6 +236,7 @@ class State {
     this.lineSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
+    this.selectedShape = undefined;
     console.log("------------------------------------------------");
     console.log("Circle selected");
     console.log(`Circle line width: ${this.context.lineWidth}`);
@@ -223,7 +247,7 @@ class State {
 
   selectEquilateralTriangle() {
     this.equilateralTriangleSelected = true;
-    this.handSelected = false;
+    this.selectSelected = false;
     this.pencilSelected = false;
     this.brushSelected = false;
     this.fillSelected = false;
@@ -233,6 +257,7 @@ class State {
     this.lineSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
+    this.selectedShape = undefined;
     console.log("------------------------------------------------");
     console.log("Triangle selected");
     console.log(`Triangle line width: ${this.context.lineWidth}`);
@@ -243,7 +268,7 @@ class State {
 
   selectLine() {
     this.lineSelected = true;
-    this.handSelected = false;
+    this.selectSelected = false;
     this.pencilSelected = false;
     this.brushSelected = false;
     this.fillSelected = false;
@@ -253,6 +278,7 @@ class State {
     this.equilateralTriangleSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
+    this.selectedShape = undefined;
     console.log("------------------------------------------------");
     console.log("Line selected");
     console.log(`Line line width: ${this.context.lineWidth}`);

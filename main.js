@@ -32,8 +32,8 @@ if (canvas.getContext) {
       case "-":
         state.decrementLineWidth();
         break;
-      case "H":
-        state.selectHand();
+      case "S":
+        state.selectSelect();
         break;
       case "P":
         state.selectPencil();
@@ -61,15 +61,19 @@ if (canvas.getContext) {
 
   canvas.onmousedown = (event) => {
     state.mouseDown = true;
-    if (state.handSelected) {
+    if (state.selectSelected) {
+      state.selectedShape = undefined;
       for (const shape of state.shapes) {
         if (shape.clicked(event.x, event.y)) {
+          state.selectedShape = shape;
           state.draggingShape = shape;
           state.draggingOffsetX = event.x - shape.x;
           state.draggingOffsetY = event.y - shape.y;
           break;
         }
       }
+
+      state.redrawCanvas();
     } else if (state.pencilSelected || state.brushSelected) {
       state.context.beginPath();
       state.context.moveTo(event.x, event.y);
@@ -102,12 +106,11 @@ if (canvas.getContext) {
     state.mouseY = event.y;
 
     if (state.mouseDown) {
-      if (state.handSelected && state.draggingShape) {
+      if (state.selectSelected && state.draggingShape) {
         state.draggingShape.x = event.x - state.draggingOffsetX;
         state.draggingShape.y = event.y - state.draggingOffsetY;
 
-        state.context.clearRect(0, 0, canvas.width, canvas.height);
-        state.shapes.forEach((shape) => shape.draw());
+        state.redrawCanvas();
       } else if (state.pencilSelected || state.brushSelected) {
         state.context.lineTo(event.x, event.y);
         state.context.stroke();
@@ -165,6 +168,7 @@ if (canvas.getContext) {
   canvas.onmouseup = (event) => {
     state.draggingShape = undefined;
     state.mouseDown = false;
+
     if (state.rectangleSelected) {
       const width = event.x - state.shapeStartX;
       const height = event.y - state.shapeStartY;
@@ -182,6 +186,8 @@ if (canvas.getContext) {
 
       rectangle.draw();
       state.shapes.push(rectangle);
+      state.selectedShape = rectangle;
+      state.redrawCanvas();
       // console.log(state.shapes);
     } else if (state.circleSelected) {
       const radius = Math.sqrt(
@@ -201,6 +207,8 @@ if (canvas.getContext) {
 
       circle.draw();
       state.shapes.push(circle);
+      state.selectedShape = circle;
+      state.redrawCanvas();
       // console.log(state.shapes);
     } else if (state.equilateralTriangleSelected) {
       const centroidRadius = Math.sqrt(
@@ -220,6 +228,8 @@ if (canvas.getContext) {
 
       triangle.draw();
       state.shapes.push(triangle);
+      state.selectedShape = triangle;
+      state.redrawCanvas();
       // console.log(state.shapes);
     } else if (state.lineSelected) {
       const line = new Line(

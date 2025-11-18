@@ -38,6 +38,20 @@ export class Rectangle extends Shape {
     context.closePath();
   }
 
+  drawClickedOutline() {
+    const oldStrokeStyle = this.context.strokeStyle;
+    this.context.strokeStyle = "#ffffff";
+    this.context.setLineDash([5, 3]);
+    this.context.strokeRect(
+      this.x - 10,
+      this.y - 10,
+      this.width + 20,
+      this.height + 20
+    );
+    this.context.setLineDash([]);
+    this.context.strokeStyle = oldStrokeStyle;
+  }
+
   clicked(x, y) {
     const top = this.y;
     const bottom = this.height + this.y;
@@ -80,6 +94,20 @@ export class Circle extends Shape {
     context.arc(x, y, radius, 0, 2 * Math.PI);
     context.stroke();
     context.closePath();
+  }
+
+  drawClickedOutline() {
+    const oldStrokeStyle = this.context.strokeStyle;
+    this.context.strokeStyle = "#ffffff";
+    this.context.setLineDash([5, 3]);
+    this.context.strokeRect(
+      this.x - this.radius - 10,
+      this.y - this.radius - 10,
+      this.radius * 2 + 20,
+      this.radius * 2 + 20
+    );
+    this.context.setLineDash([]);
+    this.context.strokeStyle = oldStrokeStyle;
   }
 
   clicked(x, y) {
@@ -177,6 +205,20 @@ export class EquilateralTriangle extends Shape {
     context.lineTo(bx, by);
     context.closePath();
     context.stroke();
+  }
+
+  drawClickedOutline() {
+    const oldStrokeStyle = this.context.strokeStyle;
+    this.context.strokeStyle = "#ffffff";
+    this.context.setLineDash([5, 3]);
+    this.context.strokeRect(
+      this.x - this.centroidRadius - 10,
+      this.y - this.centroidRadius - 10,
+      this.centroidRadius * 2 + 20,
+      this.centroidRadius * 1.5 + 20
+    );
+    this.context.setLineDash([]);
+    this.context.strokeStyle = oldStrokeStyle;
   }
 
   clicked(x, y) {
