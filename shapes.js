@@ -25,7 +25,12 @@ export class Rectangle extends Shape {
 
     this.context.beginPath();
     this.context.fillRect(this.x, this.y, this.width, this.height);
-    this.context.strokeRect(this.x, this.y, this.width, this.height);
+    this.context.strokeRect(
+      this.x + this.lineWidth / 2,
+      this.y + this.lineWidth / 2,
+      this.width - this.lineWidth,
+      this.height - this.lineWidth
+    );
     this.context.closePath();
 
     this.context.restore();
@@ -40,6 +45,8 @@ export class Rectangle extends Shape {
 
   drawClickedOutline(outlineColor) {
     const oldStrokeStyle = this.context.strokeStyle;
+    const oldLineWidth = this.context.lineWidth;
+    this.context.lineWidth = 1.0;
     this.context.strokeStyle = outlineColor;
     this.context.setLineDash([5, 3]);
     this.context.strokeRect(
@@ -50,6 +57,7 @@ export class Rectangle extends Shape {
     );
     this.context.setLineDash([]);
     this.context.strokeStyle = oldStrokeStyle;
+    this.context.lineWidth = oldLineWidth;
   }
 
   clicked(x, y) {
@@ -80,7 +88,13 @@ export class Circle extends Shape {
     this.context.lineWidth = this.lineWidth;
 
     this.context.beginPath();
-    this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    this.context.arc(
+      this.x,
+      this.y,
+      this.radius - this.lineWidth / 2,
+      0,
+      2 * Math.PI
+    );
     this.context.fill();
     this.context.stroke();
     this.context.closePath();
@@ -98,6 +112,8 @@ export class Circle extends Shape {
 
   drawClickedOutline(outlineColor) {
     const oldStrokeStyle = this.context.strokeStyle;
+    const oldLineWidth = this.context.lineWidth;
+    this.context.lineWidth = 1.0;
     this.context.strokeStyle = outlineColor;
     this.context.setLineDash([5, 3]);
     this.context.strokeRect(
@@ -108,6 +124,7 @@ export class Circle extends Shape {
     );
     this.context.setLineDash([]);
     this.context.strokeStyle = oldStrokeStyle;
+    this.context.lineWidth = oldLineWidth;
   }
 
   clicked(x, y) {
@@ -145,7 +162,7 @@ export class EquilateralTriangle extends Shape {
     this.context.lineWidth = this.lineWidth;
 
     const cx = this.x;
-    const cy = this.y - this.centroidRadius;
+    const cy = this.y - this.centroidRadius + this.lineWidth;
 
     const ax =
       this.x +
@@ -209,6 +226,8 @@ export class EquilateralTriangle extends Shape {
 
   drawClickedOutline(outlineColor) {
     const oldStrokeStyle = this.context.strokeStyle;
+    const oldLineWidth = this.context.lineWidth;
+    this.context.lineWidth = 1.0;
     this.context.strokeStyle = outlineColor;
     this.context.setLineDash([5, 3]);
     this.context.strokeRect(
@@ -219,6 +238,7 @@ export class EquilateralTriangle extends Shape {
     );
     this.context.setLineDash([]);
     this.context.strokeStyle = oldStrokeStyle;
+    this.context.lineWidth = oldLineWidth;
   }
 
   clicked(x, y) {
