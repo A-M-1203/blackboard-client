@@ -15,7 +15,7 @@ class State {
     this.eraserSize = 10;
     this.mouseDown = false;
     this.selectedShape = undefined;
-    this.prevSelectedShape = undefined;
+    this.selectedResizePoint = -1;
     this.draggingShape = undefined;
     this.draggingOffsetX = undefined;
     this.draggingOffsetY = undefined;

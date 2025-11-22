@@ -62,6 +62,15 @@ if (canvas.getContext) {
   canvas.onmousedown = (event) => {
     state.mouseDown = true;
     if (state.selectSelected) {
+      if (state.selectedShape) {
+        state.selectedResizePoint = state.selectedShape.isResizePointClicked(
+          event.x,
+          event.y
+        );
+        if (state.selectedResizePoint > -1) {
+          return;
+        }
+      }
       state.selectedShape = undefined;
       for (const shape of state.shapes) {
         if (shape.isClicked(event.x, event.y)) {
@@ -106,28 +115,36 @@ if (canvas.getContext) {
     state.mouseY = event.y;
 
     if (state.mouseDown) {
-      if (state.selectSelected && state.draggingShape) {
-        state.draggingShape.boundingRectangle.points[0].x =
-          event.x - state.draggingOffsetX;
-        state.draggingShape.boundingRectangle.points[0].y =
-          event.y - state.draggingOffsetY;
+      if (state.selectSelected) {
+        if (state.draggingShape) {
+          state.draggingShape.boundingRectangle.points[0].x =
+            event.x - state.draggingOffsetX;
+          state.draggingShape.boundingRectangle.points[0].y =
+            event.y - state.draggingOffsetY;
 
-        state.draggingShape.boundingRectangle.points[1].x =
-          state.draggingShape.boundingRectangle.points[0].x +
-          state.draggingShape.boundingRectangle.width;
-        state.draggingShape.boundingRectangle.points[1].y =
-          state.draggingShape.boundingRectangle.points[0].y;
+          state.draggingShape.boundingRectangle.points[1].x =
+            state.draggingShape.boundingRectangle.points[0].x +
+            state.draggingShape.boundingRectangle.width;
+          state.draggingShape.boundingRectangle.points[1].y =
+            state.draggingShape.boundingRectangle.points[0].y;
 
-        state.draggingShape.boundingRectangle.points[2].x =
-          state.draggingShape.boundingRectangle.points[1].x;
-        state.draggingShape.boundingRectangle.points[2].y =
-          state.draggingShape.boundingRectangle.points[1].y +
-          state.draggingShape.boundingRectangle.height;
+          state.draggingShape.boundingRectangle.points[2].x =
+            state.draggingShape.boundingRectangle.points[1].x;
+          state.draggingShape.boundingRectangle.points[2].y =
+            state.draggingShape.boundingRectangle.points[1].y +
+            state.draggingShape.boundingRectangle.height;
 
-        state.draggingShape.boundingRectangle.points[3].x =
-          state.draggingShape.boundingRectangle.points[0].x;
-        state.draggingShape.boundingRectangle.points[3].y =
-          state.draggingShape.boundingRectangle.points[2].y;
+          state.draggingShape.boundingRectangle.points[3].x =
+            state.draggingShape.boundingRectangle.points[0].x;
+          state.draggingShape.boundingRectangle.points[3].y =
+            state.draggingShape.boundingRectangle.points[2].y;
+        } else if (state.selectedResizePoint > -1) {
+          state.selectedShape.resize(
+            state.selectedResizePoint,
+            event.x,
+            event.y
+          );
+        }
 
         state.redrawCanvas();
       } else if (state.pencilSelected || state.brushSelected) {
