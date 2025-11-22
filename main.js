@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
 import state from "./state.js";
-import { Rectangle, Circle, EquilateralTriangle, Line } from "./shapes.js";
+import { Rectangle, Circle, Ellipse, Triangle, Line } from "./shapes.js";
 
 if (canvas.getContext) {
   // canvas is supported - rendering code
@@ -64,11 +64,11 @@ if (canvas.getContext) {
     if (state.selectSelected) {
       state.selectedShape = undefined;
       for (const shape of state.shapes) {
-        if (shape.clicked(event.x, event.y)) {
+        if (shape.isClicked(event.x, event.y)) {
           state.selectedShape = shape;
           state.draggingShape = shape;
-          state.draggingOffsetX = event.x - shape.x;
-          state.draggingOffsetY = event.y - shape.y;
+          state.draggingOffsetX = event.x - shape.boundingRectangle.points[0].x;
+          state.draggingOffsetY = event.y - shape.boundingRectangle.points[0].y;
           break;
         }
       }
@@ -79,7 +79,7 @@ if (canvas.getContext) {
       state.context.moveTo(event.x, event.y);
     } else if (state.fillSelected) {
       for (const shape of state.shapes) {
-        if (shape.clicked(event.x, event.y)) {
+        if (shape.isClicked(event.x, event.y)) {
           shape.fillColor = state.context.fillStyle;
         }
         shape.draw();
@@ -107,8 +107,27 @@ if (canvas.getContext) {
 
     if (state.mouseDown) {
       if (state.selectSelected && state.draggingShape) {
-        state.draggingShape.x = event.x - state.draggingOffsetX;
-        state.draggingShape.y = event.y - state.draggingOffsetY;
+        state.draggingShape.boundingRectangle.points[0].x =
+          event.x - state.draggingOffsetX;
+        state.draggingShape.boundingRectangle.points[0].y =
+          event.y - state.draggingOffsetY;
+
+        state.draggingShape.boundingRectangle.points[1].x =
+          state.draggingShape.boundingRectangle.points[0].x +
+          state.draggingShape.boundingRectangle.width;
+        state.draggingShape.boundingRectangle.points[1].y =
+          state.draggingShape.boundingRectangle.points[0].y;
+
+        state.draggingShape.boundingRectangle.points[2].x =
+          state.draggingShape.boundingRectangle.points[1].x;
+        state.draggingShape.boundingRectangle.points[2].y =
+          state.draggingShape.boundingRectangle.points[1].y +
+          state.draggingShape.boundingRectangle.height;
+
+        state.draggingShape.boundingRectangle.points[3].x =
+          state.draggingShape.boundingRectangle.points[0].x;
+        state.draggingShape.boundingRectangle.points[3].y =
+          state.draggingShape.boundingRectangle.points[2].y;
 
         state.redrawCanvas();
       } else if (state.pencilSelected || state.brushSelected) {
@@ -127,29 +146,21 @@ if (canvas.getContext) {
           state
         );
       } else if (state.circleSelected) {
-        const radius = Math.sqrt(
-          (event.x - state.shapeStartX) * (event.x - state.shapeStartX) +
-            (event.y - state.shapeStartY) * (event.y - state.shapeStartY)
-        );
-
-        Circle.drawPreview(
-          state.context,
+        Ellipse.drawPreview(
           state.shapeStartX,
           state.shapeStartY,
-          radius,
+          event.x,
+          event.y,
+          state.context,
           state
         );
       } else if (state.equilateralTriangleSelected) {
-        const centroidRadius = Math.sqrt(
-          (event.x - state.shapeStartX) * (event.x - state.shapeStartX) +
-            (event.y - state.shapeStartY) * (event.y - state.shapeStartY)
-        );
-
-        EquilateralTriangle.drawPreview(
-          state.context,
+        Triangle.drawPreview(
           state.shapeStartX,
           state.shapeStartY,
-          centroidRadius,
+          event.x,
+          event.y,
+          state.context,
           state
         );
       } else if (state.lineSelected) {
@@ -170,81 +181,68 @@ if (canvas.getContext) {
     state.mouseDown = false;
 
     if (state.rectangleSelected) {
-      const width = event.x - state.shapeStartX;
-      const height = event.y - state.shapeStartY;
-
-      const rectangle = new Rectangle(
-        state.context,
-        state.shapeStartX,
-        state.shapeStartY,
-        width,
-        height,
-        state.context.strokeStyle,
-        state.context.fillStyle,
-        state.context.lineWidth
+      state.shapes.push(
+        new Rectangle(
+          state.shapeStartX,
+          state.shapeStartY,
+          event.x,
+          event.y,
+          state.context,
+          state.context.strokeStyle,
+          state.context.fillStyle,
+          state.context.lineWidth
+        )
       );
-
-      rectangle.draw();
-      state.shapes.push(rectangle);
-      state.selectedShape = rectangle;
+      state.selectedShape = state.shapes[state.shapes.length - 1];
       state.redrawCanvas();
       // console.log(state.shapes);
     } else if (state.circleSelected) {
-      const radius = Math.sqrt(
-        (event.x - state.shapeStartX) * (event.x - state.shapeStartX) +
-          (event.y - state.shapeStartY) * (event.y - state.shapeStartY)
+      state.shapes.push(
+        new Ellipse(
+          state.shapeStartX,
+          state.shapeStartY,
+          event.x,
+          event.y,
+          state.context,
+          state.context.strokeStyle,
+          state.context.fillStyle,
+          state.context.lineWidth
+        )
       );
-
-      const circle = new Circle(
-        state.context,
-        state.shapeStartX,
-        state.shapeStartY,
-        radius,
-        state.context.strokeStyle,
-        state.context.fillStyle,
-        state.context.lineWidth
-      );
-
-      circle.draw();
-      state.shapes.push(circle);
-      state.selectedShape = circle;
+      state.selectedShape = state.shapes[state.shapes.length - 1];
       state.redrawCanvas();
       // console.log(state.shapes);
     } else if (state.equilateralTriangleSelected) {
-      const centroidRadius = Math.sqrt(
-        (event.x - state.shapeStartX) * (event.x - state.shapeStartX) +
-          (event.y - state.shapeStartY) * (event.y - state.shapeStartY)
+      state.shapes.push(
+        new Triangle(
+          state.shapeStartX,
+          state.shapeStartY,
+          event.x,
+          event.y,
+          state.context,
+          state.context.strokeStyle,
+          state.context.fillStyle,
+          state.context.lineWidth
+        )
       );
-
-      const triangle = new EquilateralTriangle(
-        state.context,
-        state.shapeStartX,
-        state.shapeStartY,
-        centroidRadius,
-        state.context.strokeStyle,
-        state.context.fillStyle,
-        state.context.lineWidth
-      );
-
-      triangle.draw();
-      state.shapes.push(triangle);
-      state.selectedShape = triangle;
+      state.selectedShape = state.shapes[state.shapes.length - 1];
       state.redrawCanvas();
       // console.log(state.shapes);
     } else if (state.lineSelected) {
-      const line = new Line(
-        state.context,
-        state.shapeStartX,
-        state.shapeStartY,
-        event.x,
-        event.y,
-        state.context.strokeStyle,
-        state.context.fillStyle,
-        state.context.lineWidth
+      state.shapes.push(
+        new Line(
+          state.shapeStartX,
+          state.shapeStartY,
+          event.x,
+          event.y,
+          state.context,
+          state.context.strokeStyle,
+          state.context.fillStyle,
+          state.context.lineWidth
+        )
       );
-
-      line.draw();
-      state.shapes.push(line);
+      state.selectedShape = state.shapes[state.shapes.length - 1];
+      state.redrawCanvas();
       // console.log(state.shapes);
     }
   };

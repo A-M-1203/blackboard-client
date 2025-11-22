@@ -1,39 +1,251 @@
+class BoundingRectangle {
+  constructor(startX, startY, endX, endY) {
+    // in clockwise order
+    this.points = [];
+    this.width = undefined;
+    this.height = undefined;
+    if (startX < endX && startY > endY) {
+      this.points.push(
+        { x: startX, y: endY },
+        { x: endX, y: endY },
+        { x: endX, y: startY },
+        { x: startX, y: startY }
+      );
+      this.width = endX - startX;
+      this.height = startY - endY;
+    } else if (startX > endX && startY > endY) {
+      this.points.push(
+        { x: endX, y: endY },
+        { x: startX, y: endY },
+        { x: startX, y: startY },
+        { x: endX, y: startY }
+      );
+      this.width = startX - endX;
+      this.height = startY - endY;
+    } else if (startX > endX && startY < endY) {
+      this.points.push(
+        { x: endX, y: startY },
+        { x: startX, y: startY },
+        { x: startX, y: endY },
+        { x: endX, y: endY }
+      );
+      this.width = startX - endX;
+      this.height = endY - startY;
+    } else {
+      this.points.push(
+        { x: startX, y: startY },
+        { x: endX, y: startY },
+        { x: endX, y: endY },
+        { x: startX, y: endY }
+      );
+      this.width = endX - startX;
+      this.height = endY - startY;
+    }
+  }
+
+  isClicked(clickX, clickY) {
+    if (
+      clickX > this.points[0].x &&
+      clickX < this.points[1].x &&
+      clickY > this.points[0].y &&
+      clickY < this.points[3].y
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+}
+
 class Shape {
-  constructor(context, x, y, strokeColor, fillColor, lineWidth) {
+  constructor(
+    startX,
+    startY,
+    endX,
+    endY,
+    context,
+    strokeColor,
+    fillColor,
+    lineWidth
+  ) {
+    this.boundingRectangle = new BoundingRectangle(startX, startY, endX, endY);
     this.context = context;
-    this.x = x;
-    this.y = y;
     this.strokeColor = strokeColor;
     this.fillColor = fillColor;
     this.lineWidth = lineWidth;
   }
+
+  isClicked(clickX, clickY) {
+    return this.boundingRectangle.isClicked(clickX, clickY);
+  }
+
+  drawClickedOutline(outlineColor) {
+    const oldStrokeStyle = this.context.strokeStyle;
+    const oldLineWidth = this.context.lineWidth;
+    this.context.lineWidth = 3.0;
+    this.context.strokeStyle = outlineColor;
+    this.context.setLineDash([5, 3]);
+    this.context.strokeRect(
+      this.boundingRectangle.points[0].x,
+      this.boundingRectangle.points[0].y,
+      this.boundingRectangle.width,
+      this.boundingRectangle.height
+    );
+    this.context.setLineDash([]);
+
+    this.context.lineWidth = 1.0;
+
+    this.context.beginPath();
+    this.context.arc(
+      this.boundingRectangle.points[0].x,
+      this.boundingRectangle.points[0].y,
+      5,
+      0,
+      2 * Math.PI
+    );
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+      this.boundingRectangle.points[0].y,
+      5,
+      0,
+      2 * Math.PI
+    );
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.boundingRectangle.points[1].x,
+      this.boundingRectangle.points[1].y,
+      5,
+      0,
+      2 * Math.PI
+    );
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.boundingRectangle.points[1].x,
+      this.boundingRectangle.points[1].y + this.boundingRectangle.height / 2,
+      5,
+      0,
+      2 * Math.PI
+    );
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.boundingRectangle.points[2].x,
+      this.boundingRectangle.points[2].y,
+      5,
+      0,
+      2 * Math.PI
+    );
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.boundingRectangle.points[2].x - this.boundingRectangle.width / 2,
+      this.boundingRectangle.points[2].y,
+      5,
+      0,
+      2 * Math.PI
+    );
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.boundingRectangle.points[3].x,
+      this.boundingRectangle.points[3].y,
+      5,
+      0,
+      2 * Math.PI
+    );
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.boundingRectangle.points[3].x,
+      this.boundingRectangle.points[3].y - this.boundingRectangle.height / 2,
+      5,
+      0,
+      2 * Math.PI
+    );
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.strokeStyle = oldStrokeStyle;
+    this.context.lineWidth = oldLineWidth;
+  }
 }
 
 export class Rectangle extends Shape {
-  constructor(context, x, y, width, height, strokeColor, fillColor, lineWidth) {
-    super(context, x, y, strokeColor, fillColor, lineWidth);
-    this.width = width;
-    this.height = height;
+  constructor(
+    startX,
+    startY,
+    endX,
+    endY,
+    context,
+    strokeColor,
+    fillColor,
+    lineWidth
+  ) {
+    super(
+      startX,
+      startY,
+      endX,
+      endY,
+      context,
+      strokeColor,
+      fillColor,
+      lineWidth
+    );
   }
 
   draw() {
-    this.context.save();
+    const oldStrokeStyle = this.context.strokeStyle;
+    const oldFillStyle = this.context.fillStyle;
+    const oldLineWidth = this.context.lineWidth;
 
     this.context.strokeStyle = this.strokeColor;
     this.context.fillStyle = this.fillColor;
     this.context.lineWidth = this.lineWidth;
 
     this.context.beginPath();
-    this.context.fillRect(this.x, this.y, this.width, this.height);
-    this.context.strokeRect(
-      this.x + this.lineWidth / 2,
-      this.y + this.lineWidth / 2,
-      this.width - this.lineWidth,
-      this.height - this.lineWidth
+    this.context.fillRect(
+      this.boundingRectangle.points[0].x,
+      this.boundingRectangle.points[0].y,
+      this.boundingRectangle.width,
+      this.boundingRectangle.height
     );
-    this.context.closePath();
+    this.context.strokeRect(
+      this.boundingRectangle.points[0].x + this.lineWidth / 2,
+      this.boundingRectangle.points[0].y + this.lineWidth / 2,
+      this.boundingRectangle.width - this.lineWidth,
+      this.boundingRectangle.height - this.lineWidth
+    );
 
-    this.context.restore();
+    this.context.closePath();
+    this.context.strokeStyle = oldStrokeStyle;
+    this.context.fillStyle = oldFillStyle;
+    this.context.lineWidth = oldLineWidth;
   }
 
   static drawPreview(context, x, y, width, height, state) {
@@ -42,46 +254,35 @@ export class Rectangle extends Shape {
     context.strokeRect(x, y, width, height);
     context.closePath();
   }
-
-  drawClickedOutline(outlineColor) {
-    const oldStrokeStyle = this.context.strokeStyle;
-    const oldLineWidth = this.context.lineWidth;
-    this.context.lineWidth = 1.0;
-    this.context.strokeStyle = outlineColor;
-    this.context.setLineDash([5, 3]);
-    this.context.strokeRect(
-      this.x - 10,
-      this.y - 10,
-      this.width + 20,
-      this.height + 20
-    );
-    this.context.setLineDash([]);
-    this.context.strokeStyle = oldStrokeStyle;
-    this.context.lineWidth = oldLineWidth;
-  }
-
-  clicked(x, y) {
-    const top = this.y;
-    const bottom = this.height + this.y;
-    const left = this.x;
-    const right = this.width + this.x;
-
-    if (x > left && x < right && y > top && y < bottom) {
-      return true;
-    }
-
-    return false;
-  }
 }
 
 export class Circle extends Shape {
-  constructor(context, x, y, radius, strokeColor, fillColor, lineWidth) {
-    super(context, x, y, strokeColor, fillColor, lineWidth);
-    this.radius = radius;
+  constructor(
+    startX,
+    startY,
+    endX,
+    endY,
+    context,
+    strokeColor,
+    fillColor,
+    lineWidth
+  ) {
+    super(
+      startX,
+      startY,
+      endX,
+      endY,
+      context,
+      strokeColor,
+      fillColor,
+      lineWidth
+    );
   }
 
   draw() {
-    this.context.save();
+    const oldStrokeStyle = this.context.strokeStyle;
+    const oldFillStyle = this.context.fillStyle;
+    const oldLineWidth = this.context.lineWidth;
 
     this.context.strokeStyle = this.strokeColor;
     this.context.fillStyle = this.fillColor;
@@ -89,192 +290,245 @@ export class Circle extends Shape {
 
     this.context.beginPath();
     this.context.arc(
-      this.x,
-      this.y,
-      this.radius - this.lineWidth / 2,
+      this.boundingRectangle.points[0].x +
+        this.boundingRectangle.width / 2 +
+        this.lineWidth / 2,
+      this.boundingRectangle.points[0].y +
+        this.boundingRectangle.height / 2 +
+        this.lineWidth / 2,
+      this.boundingRectangle.width / 2 - this.lineWidth / 2,
       0,
       2 * Math.PI
     );
     this.context.fill();
     this.context.stroke();
     this.context.closePath();
-
-    this.context.restore();
-  }
-
-  static drawPreview(context, x, y, radius, state) {
-    context.putImageData(state.contextImageData, 0, 0);
-    context.beginPath();
-    context.arc(x, y, radius, 0, 2 * Math.PI);
-    context.stroke();
-    context.closePath();
-  }
-
-  drawClickedOutline(outlineColor) {
-    const oldStrokeStyle = this.context.strokeStyle;
-    const oldLineWidth = this.context.lineWidth;
-    this.context.lineWidth = 1.0;
-    this.context.strokeStyle = outlineColor;
-    this.context.setLineDash([5, 3]);
-    this.context.strokeRect(
-      this.x - this.radius - 10,
-      this.y - this.radius - 10,
-      this.radius * 2 + 20,
-      this.radius * 2 + 20
-    );
-    this.context.setLineDash([]);
     this.context.strokeStyle = oldStrokeStyle;
+    this.context.fillStyle = oldFillStyle;
     this.context.lineWidth = oldLineWidth;
   }
 
-  clicked(x, y) {
-    const distance = Math.sqrt(
-      (x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)
+  static drawPreview(startX, startY, endX, endY, context, state) {
+    context.putImageData(state.contextImageData, 0, 0);
+    context.beginPath();
+    const boundingRectangleWidth = endX - startX;
+    const boundingRectangleHeight = endY - startY;
+    context.arc(
+      startX + boundingRectangleWidth / 2,
+      startY + boundingRectangleHeight / 2,
+      boundingRectangleWidth / 2,
+      0,
+      2 * Math.PI
     );
-
-    if (distance < this.radius) {
-      return true;
-    }
-
-    return false;
+    context.stroke();
+    context.closePath();
   }
 }
 
-export class EquilateralTriangle extends Shape {
+export class Ellipse extends Shape {
   constructor(
+    startX,
+    startY,
+    endX,
+    endY,
     context,
-    x,
-    y,
-    centroidRadius,
     strokeColor,
     fillColor,
     lineWidth
   ) {
-    super(context, x, y, strokeColor, fillColor, lineWidth);
-    this.centroidRadius = centroidRadius;
+    super(
+      startX,
+      startY,
+      endX,
+      endY,
+      context,
+      strokeColor,
+      fillColor,
+      lineWidth
+    );
   }
 
   draw() {
-    this.context.save();
+    const oldStrokeStyle = this.context.strokeStyle;
+    const oldFillStyle = this.context.fillStyle;
+    const oldLineWidth = this.context.lineWidth;
 
     this.context.strokeStyle = this.strokeColor;
     this.context.fillStyle = this.fillColor;
     this.context.lineWidth = this.lineWidth;
 
-    const cx = this.x;
-    const cy = this.y - this.centroidRadius + this.lineWidth;
-
-    const ax =
-      this.x +
-      (cx - this.x) * Math.cos(120 * (Math.PI / 180)) -
-      (cy - this.y) * Math.sin(120 * (Math.PI / 180));
-    const ay =
-      this.y +
-      (cx - this.x) * Math.sin(120 * (Math.PI / 180)) +
-      (cy - this.y) * Math.cos(120 * (Math.PI / 180));
-
-    const bx =
-      this.x +
-      (cx - this.x) * Math.cos(240 * (Math.PI / 180)) -
-      (cy - this.y) * Math.sin(240 * (Math.PI / 180));
-    const by =
-      this.y +
-      (cx - this.x) * Math.sin(240 * (Math.PI / 180)) +
-      (cy - this.y) * Math.cos(240 * (Math.PI / 180));
-
     this.context.beginPath();
-    this.context.moveTo(cx, cy);
-    this.context.lineTo(ax, ay);
-    this.context.lineTo(bx, by);
-    this.context.closePath();
+    this.context.ellipse(
+      this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+      this.boundingRectangle.points[0].y + this.boundingRectangle.height / 2,
+      this.boundingRectangle.width / 2 - this.lineWidth / 2,
+      this.boundingRectangle.height / 2 - this.lineWidth / 2,
+      0,
+      0,
+      2 * Math.PI
+    );
+
     this.context.fill();
     this.context.stroke();
-
-    this.context.restore();
-  }
-
-  static drawPreview(context, x, y, centroidRadius, state) {
-    const cx = x;
-    const cy = y - centroidRadius;
-
-    const ax =
-      x +
-      (cx - x) * Math.cos(120 * (Math.PI / 180)) -
-      (cy - y) * Math.sin(120 * (Math.PI / 180));
-    const ay =
-      y +
-      (cx - x) * Math.sin(120 * (Math.PI / 180)) +
-      (cy - y) * Math.cos(120 * (Math.PI / 180));
-
-    const bx =
-      x +
-      (cx - x) * Math.cos(240 * (Math.PI / 180)) -
-      (cy - y) * Math.sin(240 * (Math.PI / 180));
-    const by =
-      y +
-      (cx - x) * Math.sin(240 * (Math.PI / 180)) +
-      (cy - y) * Math.cos(240 * (Math.PI / 180));
-
-    context.putImageData(state.contextImageData, 0, 0);
-    context.beginPath();
-    context.moveTo(cx, cy);
-    context.lineTo(ax, ay);
-    context.lineTo(bx, by);
-    context.closePath();
-    context.stroke();
-  }
-
-  drawClickedOutline(outlineColor) {
-    const oldStrokeStyle = this.context.strokeStyle;
-    const oldLineWidth = this.context.lineWidth;
-    this.context.lineWidth = 1.0;
-    this.context.strokeStyle = outlineColor;
-    this.context.setLineDash([5, 3]);
-    this.context.strokeRect(
-      this.x - this.centroidRadius - 10,
-      this.y - this.centroidRadius - 10,
-      this.centroidRadius * 2 + 20,
-      this.centroidRadius * 1.5 + 20
-    );
-    this.context.setLineDash([]);
+    this.context.closePath();
     this.context.strokeStyle = oldStrokeStyle;
+    this.context.fillStyle = oldFillStyle;
     this.context.lineWidth = oldLineWidth;
   }
 
-  clicked(x, y) {
-    const distance = Math.sqrt(
-      (x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)
-    );
+  static drawPreview(startX, startY, endX, endY, context, state) {
+    context.putImageData(state.contextImageData, 0, 0);
 
-    if (distance < this.centroidRadius / 1.2) {
-      return true;
+    const boundingRectangleHeight = endY - startY;
+    const boundingRectangleWidth = endX - startX;
+    context.beginPath();
+    context.ellipse(
+      startX + boundingRectangleWidth / 2,
+      startY + boundingRectangleHeight / 2,
+      Math.abs(boundingRectangleWidth / 2),
+      Math.abs(boundingRectangleHeight / 2),
+      Math.PI,
+      0,
+      2 * Math.PI
+    );
+    context.stroke();
+    context.closePath();
+  }
+}
+
+export class Triangle extends Shape {
+  constructor(
+    startX,
+    startY,
+    endX,
+    endY,
+    context,
+    strokeColor,
+    fillColor,
+    lineWidth
+  ) {
+    super(
+      startX,
+      startY,
+      endX,
+      endY,
+      context,
+      strokeColor,
+      fillColor,
+      lineWidth
+    );
+    this.startY = startY;
+    this.endY = endY;
+  }
+
+  draw() {
+    const oldStrokeStyle = this.context.strokeStyle;
+    const oldFillStyle = this.context.fillStyle;
+    const oldLineWidth = this.context.lineWidth;
+
+    this.context.strokeStyle = this.strokeColor;
+    this.context.fillStyle = this.fillColor;
+    this.context.lineWidth = this.lineWidth;
+
+    this.context.beginPath();
+    if (this.endY < this.startY) {
+      this.context.moveTo(
+        this.boundingRectangle.points[0].x,
+        this.boundingRectangle.points[0].y
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[1].x,
+        this.boundingRectangle.points[1].y
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[2].x - this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[2].y
+      );
+    } else {
+      this.context.beginPath();
+      this.context.moveTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[0].y
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[2].x,
+        this.boundingRectangle.points[2].y
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[3].x,
+        this.boundingRectangle.points[3].y
+      );
     }
 
-    return false;
+    this.context.fill();
+    this.context.closePath();
+    this.context.stroke();
+
+    this.context.strokeStyle = oldStrokeStyle;
+    this.context.fillStyle = oldFillStyle;
+    this.context.lineWidth = oldLineWidth;
+  }
+
+  static drawPreview(startX, startY, endX, endY, context, state) {
+    context.putImageData(state.contextImageData, 0, 0);
+    const boundingRectangleWidth = endX - startX;
+    const boundingRectangleHeight = endY - startY;
+    context.beginPath();
+
+    context.moveTo(startX + boundingRectangleWidth / 2, startY);
+    context.lineTo(endX, endY);
+    context.lineTo(startX, startY + boundingRectangleHeight);
+
+    context.closePath();
+    context.stroke();
   }
 }
 
 export class Line extends Shape {
-  constructor(context, x, y, endX, endY, strokeColor, fillColor, lineWidth) {
-    super(context, x, y, strokeColor, fillColor, lineWidth);
+  constructor(
+    startX,
+    startY,
+    endX,
+    endY,
+    context,
+    strokeColor,
+    fillColor,
+    lineWidth
+  ) {
+    super(
+      startX,
+      startY,
+      endX,
+      endY,
+      context,
+      strokeColor,
+      fillColor,
+      lineWidth
+    );
+    this.startX = startX;
+    this.startY = startY;
     this.endX = endX;
     this.endY = endY;
   }
 
   draw() {
-    this.context.save();
+    const oldStrokeStyle = this.context.strokeStyle;
+    const oldFillStyle = this.context.fillStyle;
+    const oldLineWidth = this.context.lineWidth;
 
     this.context.strokeStyle = this.strokeColor;
     this.context.fillStyle = this.fillColor;
     this.context.lineWidth = this.lineWidth;
 
     this.context.beginPath();
-    this.context.moveTo(this.x, this.y);
-    this.context.lineTo(this.endX, this, this.endY);
+    this.context.moveTo(this.startX, this.startY);
+    this.context.lineTo(this.endX, this.endY);
     this.context.stroke();
     this.context.closePath();
 
-    this.context.restore();
+    this.context.strokeStyle = oldStrokeStyle;
+    this.context.fillStyle = oldFillStyle;
+    this.context.lineWidth = oldLineWidth;
   }
 
   static drawPreview(context, x, y, endX, endY, state) {
@@ -285,6 +539,4 @@ export class Line extends Shape {
     context.stroke();
     context.closePath();
   }
-
-  clicked() {}
 }
