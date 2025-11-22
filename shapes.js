@@ -100,7 +100,7 @@ class Shape {
     this.context.arc(
       this.boundingRectangle.points[0].x,
       this.boundingRectangle.points[0].y,
-      6,
+      5,
       0,
       2 * Math.PI
     );
@@ -113,7 +113,7 @@ class Shape {
     this.context.arc(
       this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
       this.boundingRectangle.points[0].y,
-      6,
+      5,
       0,
       2 * Math.PI
     );
@@ -126,7 +126,7 @@ class Shape {
     this.context.arc(
       this.boundingRectangle.points[1].x,
       this.boundingRectangle.points[1].y,
-      6,
+      5,
       0,
       2 * Math.PI
     );
@@ -139,7 +139,7 @@ class Shape {
     this.context.arc(
       this.boundingRectangle.points[1].x,
       this.boundingRectangle.points[1].y + this.boundingRectangle.height / 2,
-      6,
+      5,
       0,
       2 * Math.PI
     );
@@ -152,7 +152,7 @@ class Shape {
     this.context.arc(
       this.boundingRectangle.points[2].x,
       this.boundingRectangle.points[2].y,
-      6,
+      5,
       0,
       2 * Math.PI
     );
@@ -165,7 +165,7 @@ class Shape {
     this.context.arc(
       this.boundingRectangle.points[2].x - this.boundingRectangle.width / 2,
       this.boundingRectangle.points[2].y,
-      6,
+      5,
       0,
       2 * Math.PI
     );
@@ -173,12 +173,12 @@ class Shape {
     this.context.stroke();
     this.context.closePath();
 
-    // resize point 6
+    // resize point n
     this.context.beginPath();
     this.context.arc(
       this.boundingRectangle.points[3].x,
       this.boundingRectangle.points[3].y,
-      6,
+      5,
       0,
       2 * Math.PI
     );
@@ -191,7 +191,7 @@ class Shape {
     this.context.arc(
       this.boundingRectangle.points[3].x,
       this.boundingRectangle.points[3].y - this.boundingRectangle.height / 2,
-      6,
+      5,
       0,
       2 * Math.PI
     );
@@ -205,10 +205,48 @@ class Shape {
 
   resize(resizePoint, endX, endY) {
     switch (resizePoint) {
+      case 0:
+        if (
+          endY < this.boundingRectangle.points[2].y - 10 &&
+          endX < this.boundingRectangle.points[2].x - 10
+        ) {
+          this.boundingRectangle.points[0].x = endX;
+          this.boundingRectangle.points[0].y = endY;
+          this.boundingRectangle.points[1].y = endY;
+          this.boundingRectangle.points[3].x = endX;
+
+          this.boundingRectangle.width =
+            this.boundingRectangle.points[1].x -
+            this.boundingRectangle.points[0].x;
+
+          this.boundingRectangle.height =
+            this.boundingRectangle.points[3].y -
+            this.boundingRectangle.points[0].y;
+        }
+        break;
       case 1:
         if (endY < this.boundingRectangle.points[3].y - 10) {
           this.boundingRectangle.points[0].y = endY;
           this.boundingRectangle.points[1].y = endY;
+          this.boundingRectangle.height =
+            this.boundingRectangle.points[3].y -
+            this.boundingRectangle.points[0].y;
+        }
+        break;
+      case 2:
+        if (
+          endY < this.boundingRectangle.points[2].y - 10 &&
+          endX > this.boundingRectangle.points[0].x + 10
+        ) {
+          this.boundingRectangle.points[1].x = endX;
+          this.boundingRectangle.points[1].y = endY;
+          this.boundingRectangle.points[0].y = endY;
+          this.boundingRectangle.points[2].x = endX;
+
+          this.boundingRectangle.width =
+            this.boundingRectangle.points[1].x -
+            this.boundingRectangle.points[0].x;
+
           this.boundingRectangle.height =
             this.boundingRectangle.points[3].y -
             this.boundingRectangle.points[0].y;
@@ -223,10 +261,48 @@ class Shape {
             this.boundingRectangle.points[0].x;
         }
         break;
+      case 4:
+        if (
+          endY > this.boundingRectangle.points[0].y + 10 &&
+          endX > this.boundingRectangle.points[0].x + 10
+        ) {
+          this.boundingRectangle.points[2].x = endX;
+          this.boundingRectangle.points[2].y = endY;
+          this.boundingRectangle.points[1].x = endX;
+          this.boundingRectangle.points[3].y = endY;
+
+          this.boundingRectangle.width =
+            this.boundingRectangle.points[1].x -
+            this.boundingRectangle.points[0].x;
+
+          this.boundingRectangle.height =
+            this.boundingRectangle.points[3].y -
+            this.boundingRectangle.points[0].y;
+        }
+        break;
       case 5:
         if (endY > this.boundingRectangle.points[0].y + 10) {
           this.boundingRectangle.points[2].y = endY;
           this.boundingRectangle.points[3].y = endY;
+          this.boundingRectangle.height =
+            this.boundingRectangle.points[3].y -
+            this.boundingRectangle.points[0].y;
+        }
+        break;
+      case 6:
+        if (
+          endY > this.boundingRectangle.points[0].y + 10 &&
+          endX < this.boundingRectangle.points[1].x - 10
+        ) {
+          this.boundingRectangle.points[3].x = endX;
+          this.boundingRectangle.points[3].y = endY;
+          this.boundingRectangle.points[0].x = endX;
+          this.boundingRectangle.points[2].y = endY;
+
+          this.boundingRectangle.width =
+            this.boundingRectangle.points[1].x -
+            this.boundingRectangle.points[0].x;
+
           this.boundingRectangle.height =
             this.boundingRectangle.points[3].y -
             this.boundingRectangle.points[0].y;
@@ -245,7 +321,7 @@ class Shape {
   }
 
   isResizePointClicked(clickX, clickY) {
-    const radius = 6;
+    const radius = 9;
 
     // resize point 0
     let deltaX = clickX - this.boundingRectangle.points[0].x;
