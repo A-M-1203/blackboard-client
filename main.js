@@ -1,6 +1,9 @@
 const canvas = document.getElementById("canvas");
 import state from "./state.js";
-import { Rectangle, Circle, Ellipse, Triangle, Line } from "./shapes.js";
+import Rectangle from "./shapes/Rectangle.js";
+import Oval from "./shapes/Oval.js";
+import Triangle from "./shapes/Triangle.js";
+import Line from "./shapes/Line.js";
 
 if (canvas.getContext) {
   // canvas is supported - rendering code
@@ -163,7 +166,7 @@ if (canvas.getContext) {
           state
         );
       } else if (state.circleSelected) {
-        Ellipse.drawPreview(
+        Oval.drawPreview(
           state.shapeStartX,
           state.shapeStartY,
           event.x,
@@ -215,7 +218,7 @@ if (canvas.getContext) {
       // console.log(state.shapes);
     } else if (state.circleSelected) {
       state.shapes.push(
-        new Ellipse(
+        new Oval(
           state.shapeStartX,
           state.shapeStartY,
           event.x,
