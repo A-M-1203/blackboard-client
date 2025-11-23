@@ -4,6 +4,7 @@ import Rectangle from "./shapes/Rectangle.js";
 import Oval from "./shapes/Oval.js";
 import Triangle from "./shapes/Triangle.js";
 import Line from "./shapes/Line.js";
+import Diamond from "./shapes/diamond.js";
 
 if (canvas.getContext) {
   // canvas is supported - rendering code
@@ -54,10 +55,13 @@ if (canvas.getContext) {
         state.selectCircle();
         break;
       case "T":
-        state.selectEquilateralTriangle();
+        state.selectTriangle();
         break;
       case "L":
         state.selectLine();
+        break;
+      case "D":
+        state.selectDiamond();
         break;
     }
   };
@@ -103,12 +107,7 @@ if (canvas.getContext) {
       }
 
       state.redrawCanvas();
-    } else if (
-      state.lineSelected ||
-      state.rectangleSelected ||
-      state.circleSelected ||
-      state.equilateralTriangleSelected
-    ) {
+    } else if (state.shapeSelected()) {
       state.shapeStartX = event.x;
       state.shapeStartY = event.y;
       state.contextImageData = state.context.getImageData(
@@ -181,7 +180,7 @@ if (canvas.getContext) {
           state.context,
           state
         );
-      } else if (state.equilateralTriangleSelected) {
+      } else if (state.triangleSelected) {
         Triangle.drawPreview(
           state.shapeStartX,
           state.shapeStartY,
@@ -197,6 +196,15 @@ if (canvas.getContext) {
           state.shapeStartY,
           event.x,
           event.y,
+          state
+        );
+      } else if (state.diamondSelected) {
+        Diamond.drawPreview(
+          state.shapeStartX,
+          state.shapeStartY,
+          event.x,
+          event.y,
+          state.context,
           state
         );
       }
@@ -239,7 +247,7 @@ if (canvas.getContext) {
       state.selectedShape = state.shapes[state.shapes.length - 1];
       state.redrawCanvas();
       // console.log(state.shapes);
-    } else if (state.equilateralTriangleSelected) {
+    } else if (state.triangleSelected) {
       state.shapes.push(
         new Triangle(
           state.shapeStartX,
@@ -258,6 +266,22 @@ if (canvas.getContext) {
     } else if (state.lineSelected) {
       state.shapes.push(
         new Line(
+          state.shapeStartX,
+          state.shapeStartY,
+          event.x,
+          event.y,
+          state.context,
+          state.context.strokeStyle,
+          state.context.fillStyle,
+          state.context.lineWidth
+        )
+      );
+      state.selectedShape = state.shapes[state.shapes.length - 1];
+      state.redrawCanvas();
+      // console.log(state.shapes);
+    } else if (state.diamondSelected) {
+      state.shapes.push(
+        new Diamond(
           state.shapeStartX,
           state.shapeStartY,
           event.x,

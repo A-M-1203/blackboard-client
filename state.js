@@ -25,10 +25,11 @@ class State {
     this.fillSelected = false;
     this.brushSelected = false;
     this.eraserSelected = false;
-    this.lineSelected = false;
     this.rectangleSelected = false;
     this.circleSelected = false;
-    this.equilateralTriangleSelected = false;
+    this.triangleSelected = false;
+    this.lineSelected = false;
+    this.diamondSelected = false;
 
     // starting coordinates for drawing shapes (line, rectangle, circle...)
     this.shapeStartX = 0;
@@ -71,7 +72,8 @@ class State {
       this.lineSelected ||
       this.rectangleSelected ||
       this.circleSelected ||
-      this.equilateralTriangleSelected
+      this.triangleSelected ||
+      this.diamondSelected
     ) {
       return true;
     }
@@ -170,8 +172,9 @@ class State {
     this.eraserSelected = false;
     this.rectangleSelected = false;
     this.circleSelected = false;
-    this.equilateralTriangleSelected = false;
+    this.triangleSelected = false;
     this.lineSelected = false;
+    this.diamondSelected = false;
     console.log("------------------------------------------------");
     console.log("Select selected");
     console.log("------------------------------------------------");
@@ -185,8 +188,9 @@ class State {
     this.eraserSelected = false;
     this.rectangleSelected = false;
     this.circleSelected = false;
-    this.equilateralTriangleSelected = false;
+    this.triangleSelected = false;
     this.lineSelected = false;
+    this.diamondSelected = false;
     this.context.lineWidth = this.pencilLineWidth;
     this.context.strokeStyle = this.pencilColor;
     this.selectedShape = undefined;
@@ -205,8 +209,9 @@ class State {
     this.eraserSelected = false;
     this.rectangleSelected = false;
     this.circleSelected = false;
-    this.equilateralTriangleSelected = false;
+    this.triangleSelected = false;
     this.lineSelected = false;
+    this.diamondSelected = false;
     this.context.lineWidth = this.brushLineWidth;
     this.context.strokeStyle = this.brushColor;
     this.selectedShape = undefined;
@@ -225,8 +230,9 @@ class State {
     this.eraserSelected = false;
     this.rectangleSelected = false;
     this.circleSelected = false;
-    this.equilateralTriangleSelected = false;
+    this.triangleSelected = false;
     this.lineSelected = false;
+    this.diamondSelected = false;
     this.context.fillStyle = this.fillColor;
     this.selectedShape = undefined;
     console.log("------------------------------------------------");
@@ -243,8 +249,9 @@ class State {
     this.fillSelected = false;
     this.eraserSelected = false;
     this.circleSelected = false;
-    this.equilateralTriangleSelected = false;
+    this.triangleSelected = false;
     this.lineSelected = false;
+    this.diamondSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -264,8 +271,9 @@ class State {
     this.fillSelected = false;
     this.eraserSelected = false;
     this.rectangleSelected = false;
-    this.equilateralTriangleSelected = false;
+    this.triangleSelected = false;
     this.lineSelected = false;
+    this.diamondSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -277,8 +285,8 @@ class State {
     console.log("------------------------------------------------");
   }
 
-  selectEquilateralTriangle() {
-    this.equilateralTriangleSelected = true;
+  selectTriangle() {
+    this.triangleSelected = true;
     this.selectSelected = false;
     this.pencilSelected = false;
     this.brushSelected = false;
@@ -287,6 +295,7 @@ class State {
     this.rectangleSelected = false;
     this.circleSelected = false;
     this.lineSelected = false;
+    this.diamondSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -307,7 +316,8 @@ class State {
     this.eraserSelected = false;
     this.rectangleSelected = false;
     this.circleSelected = false;
-    this.equilateralTriangleSelected = false;
+    this.triangleSelected = false;
+    this.diamondSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -315,6 +325,27 @@ class State {
     console.log("Line selected");
     console.log(`Line line width: ${this.context.lineWidth}`);
     console.log(`Line line color width: ${this.context.strokeStyle}`);
+    console.log("------------------------------------------------");
+  }
+
+  selectDiamond() {
+    this.diamondSelected = true;
+    this.selectSelected = false;
+    this.pencilSelected = false;
+    this.brushSelected = false;
+    this.fillSelected = false;
+    this.eraserSelected = false;
+    this.rectangleSelected = false;
+    this.circleSelected = false;
+    this.triangleSelected = false;
+    this.lineSelected = false;
+    this.context.lineWidth = this.shapeLineWidth;
+    this.context.strokeStyle = this.strokeColor;
+    this.selectedShape = undefined;
+    console.log("------------------------------------------------");
+    console.log("Diamond selected");
+    console.log(`Diamond line width: ${this.context.lineWidth}`);
+    console.log(`Diamond line color width: ${this.context.strokeStyle}`);
     console.log("------------------------------------------------");
   }
 }
