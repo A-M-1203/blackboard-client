@@ -120,8 +120,13 @@ if (canvas.getContext) {
   };
 
   canvas.onmousemove = (event) => {
-    state.mouseX = event.x;
     state.mouseY = event.y;
+
+    if (event.shiftKey) {
+      state.mouseX = event.y - state.shapeStartY + state.shapeStartX;
+    } else {
+      state.mouseX = event.x;
+    }
 
     if (state.mouseDown) {
       if (state.selectSelected) {
@@ -160,8 +165,8 @@ if (canvas.getContext) {
         state.context.lineTo(event.x, event.y);
         state.context.stroke();
       } else if (state.rectangleSelected) {
-        const width = event.x - state.shapeStartX;
-        const height = event.y - state.shapeStartY;
+        const width = state.mouseX - state.shapeStartX;
+        const height = state.mouseY - state.shapeStartY;
 
         Rectangle.drawPreview(
           state.context,
@@ -175,8 +180,8 @@ if (canvas.getContext) {
         Oval.drawPreview(
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
-          event.y,
+          state.mouseX,
+          state.mouseY,
           state.context,
           state
         );
@@ -184,8 +189,8 @@ if (canvas.getContext) {
         Triangle.drawPreview(
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
-          event.y,
+          state.mouseX,
+          state.mouseY,
           state.context,
           state
         );
@@ -194,16 +199,16 @@ if (canvas.getContext) {
           state.context,
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
-          event.y,
+          state.mouseX,
+          state.mouseY,
           state
         );
       } else if (state.diamondSelected) {
         Diamond.drawPreview(
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
-          event.y,
+          state.mouseX,
+          state.mouseY,
           state.context,
           state
         );
@@ -220,7 +225,7 @@ if (canvas.getContext) {
         new Rectangle(
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
+          state.mouseX,
           event.y,
           state.context,
           state.context.strokeStyle,
@@ -236,7 +241,7 @@ if (canvas.getContext) {
         new Oval(
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
+          state.mouseX,
           event.y,
           state.context,
           state.context.strokeStyle,
@@ -252,7 +257,7 @@ if (canvas.getContext) {
         new Triangle(
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
+          state.mouseX,
           event.y,
           state.context,
           state.context.strokeStyle,
@@ -268,7 +273,7 @@ if (canvas.getContext) {
         new Line(
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
+          state.mouseX,
           event.y,
           state.context,
           state.context.strokeStyle,
@@ -284,7 +289,7 @@ if (canvas.getContext) {
         new Diamond(
           state.shapeStartX,
           state.shapeStartY,
-          event.x,
+          state.mouseX,
           event.y,
           state.context,
           state.context.strokeStyle,
