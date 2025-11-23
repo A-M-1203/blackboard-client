@@ -90,12 +90,19 @@ if (canvas.getContext) {
       state.context.beginPath();
       state.context.moveTo(event.x, event.y);
     } else if (state.fillSelected) {
+      let shapeClicked = false;
       for (const shape of state.shapes) {
         if (shape.isClicked(event.x, event.y)) {
           shape.fillColor = state.context.fillStyle;
+          shapeClicked = true;
         }
-        shape.draw();
       }
+
+      if (!shapeClicked) {
+        state.backgroundColor = state.context.fillStyle;
+      }
+
+      state.redrawCanvas();
     } else if (
       state.lineSelected ||
       state.rectangleSelected ||

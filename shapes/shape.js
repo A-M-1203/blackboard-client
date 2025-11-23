@@ -23,10 +23,11 @@ export default class Shape {
   }
 
   drawClickedOutline(outlineColor) {
+    const oldFillStyle = this.context.fillStyle;
     const oldStrokeStyle = this.context.strokeStyle;
     const oldLineWidth = this.context.lineWidth;
-    this.context.lineWidth = 3.0;
     this.context.strokeStyle = outlineColor;
+    this.context.lineWidth = 3.0;
     this.context.setLineDash([5, 3]);
     this.context.strokeRect(
       this.boundingRectangle.points[0].x,
@@ -36,6 +37,7 @@ export default class Shape {
     );
     this.context.setLineDash([]);
 
+    this.context.fillStyle = "#000000";
     this.context.lineWidth = 1.0;
 
     // resize point 0
@@ -116,7 +118,7 @@ export default class Shape {
     this.context.stroke();
     this.context.closePath();
 
-    // resize point n
+    // resize point 6
     this.context.beginPath();
     this.context.arc(
       this.boundingRectangle.points[3].x,
@@ -142,6 +144,7 @@ export default class Shape {
     this.context.stroke();
     this.context.closePath();
 
+    this.context.fillStyle = oldFillStyle;
     this.context.strokeStyle = oldStrokeStyle;
     this.context.lineWidth = oldLineWidth;
   }

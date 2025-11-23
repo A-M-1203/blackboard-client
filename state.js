@@ -6,9 +6,10 @@ class State {
     this.pencilColor = "#ffffff";
     this.brushColor = "#ffffff";
     this.strokeColor = "#ffffff";
-    this.fillColor = "#000000";
     // color of the dashed line when shape is selected
     this.outlineColor = "#ffffff";
+    this.backgroundColor = "#141414";
+    this.fillColor = this.backgroundColor;
     this.pencilLineWidth = 1.0;
     this.brushLineWidth = 1.0;
     this.shapeLineWidth = 1.0;
@@ -46,6 +47,17 @@ class State {
       this.context.canvas.width,
       this.context.canvas.height
     );
+
+    // background
+    const oldFillStyle = this.context.fillStyle;
+    this.context.fillStyle = this.backgroundColor;
+    this.context.fillRect(
+      0,
+      0,
+      this.context.canvas.width,
+      this.context.canvas.height
+    );
+    this.context.fillStyle = oldFillStyle;
 
     this.shapes.forEach((shape) => shape.draw());
 
