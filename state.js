@@ -30,6 +30,7 @@ class State {
     this.triangleSelected = false;
     this.lineSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
 
     // starting coordinates for drawing shapes (line, rectangle, circle...)
     this.shapeStartX = 0;
@@ -73,7 +74,8 @@ class State {
       this.rectangleSelected ||
       this.circleSelected ||
       this.triangleSelected ||
-      this.diamondSelected
+      this.diamondSelected ||
+      this.starSelected
     ) {
       return true;
     }
@@ -175,6 +177,7 @@ class State {
     this.triangleSelected = false;
     this.lineSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
     console.log("------------------------------------------------");
     console.log("Select selected");
     console.log("------------------------------------------------");
@@ -191,6 +194,7 @@ class State {
     this.triangleSelected = false;
     this.lineSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
     this.context.lineWidth = this.pencilLineWidth;
     this.context.strokeStyle = this.pencilColor;
     this.selectedShape = undefined;
@@ -212,6 +216,7 @@ class State {
     this.triangleSelected = false;
     this.lineSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
     this.context.lineWidth = this.brushLineWidth;
     this.context.strokeStyle = this.brushColor;
     this.selectedShape = undefined;
@@ -233,6 +238,7 @@ class State {
     this.triangleSelected = false;
     this.lineSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
     this.context.fillStyle = this.fillColor;
     this.selectedShape = undefined;
     console.log("------------------------------------------------");
@@ -252,6 +258,7 @@ class State {
     this.triangleSelected = false;
     this.lineSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -274,6 +281,7 @@ class State {
     this.triangleSelected = false;
     this.lineSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -296,6 +304,7 @@ class State {
     this.circleSelected = false;
     this.lineSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -318,6 +327,7 @@ class State {
     this.circleSelected = false;
     this.triangleSelected = false;
     this.diamondSelected = false;
+    this.starSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -339,6 +349,7 @@ class State {
     this.circleSelected = false;
     this.triangleSelected = false;
     this.lineSelected = false;
+    this.starSelected = false;
     this.context.lineWidth = this.shapeLineWidth;
     this.context.strokeStyle = this.strokeColor;
     this.selectedShape = undefined;
@@ -346,6 +357,29 @@ class State {
     console.log("Diamond selected");
     console.log(`Diamond line width: ${this.context.lineWidth}`);
     console.log(`Diamond line color width: ${this.context.strokeStyle}`);
+    console.log("------------------------------------------------");
+  }
+
+  selectStar() {
+    this.starSelected = true;
+    this.rectangleSelected = false;
+    this.selectSelected = false;
+    this.pencilSelected = false;
+    this.brushSelected = false;
+    this.fillSelected = false;
+    this.eraserSelected = false;
+    this.circleSelected = false;
+    this.triangleSelected = false;
+    this.lineSelected = false;
+    this.diamondSelected = false;
+    this.context.lineWidth = this.shapeLineWidth;
+    this.context.strokeStyle = this.strokeColor;
+    this.selectedShape = undefined;
+    console.log("------------------------------------------------");
+    console.log("Star selected");
+    console.log(`Star line width: ${this.context.lineWidth}`);
+    console.log(`Star line color width: ${this.context.strokeStyle}`);
+    console.log(`Star fill color: ${this.context.fillStyle}`);
     console.log("------------------------------------------------");
   }
 }

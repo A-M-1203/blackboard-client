@@ -5,6 +5,7 @@ import Oval from "./shapes/Oval.js";
 import Triangle from "./shapes/Triangle.js";
 import Line from "./shapes/Line.js";
 import Diamond from "./shapes/diamond.js";
+import Star from "./shapes/star.js";
 
 if (canvas.getContext) {
   // canvas is supported - rendering code
@@ -62,6 +63,9 @@ if (canvas.getContext) {
         break;
       case "D":
         state.selectDiamond();
+        break;
+      case "Q":
+        state.selectStar();
         break;
     }
   };
@@ -212,6 +216,15 @@ if (canvas.getContext) {
           state.context,
           state
         );
+      } else if (state.starSelected) {
+        Star.drawPreview(
+          state.shapeStartX,
+          state.shapeStartY,
+          state.mouseX,
+          state.mouseY,
+          state.context,
+          state
+        );
       }
     }
   };
@@ -287,6 +300,22 @@ if (canvas.getContext) {
     } else if (state.diamondSelected) {
       state.shapes.push(
         new Diamond(
+          state.shapeStartX,
+          state.shapeStartY,
+          state.mouseX,
+          event.y,
+          state.context,
+          state.context.strokeStyle,
+          state.context.fillStyle,
+          state.context.lineWidth
+        )
+      );
+      state.selectedShape = state.shapes[state.shapes.length - 1];
+      state.redrawCanvas();
+      // console.log(state.shapes);
+    } else if (state.starSelected) {
+      state.shapes.push(
+        new Star(
           state.shapeStartX,
           state.shapeStartY,
           state.mouseX,
