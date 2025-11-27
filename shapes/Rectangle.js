@@ -52,8 +52,8 @@ export default class Rectangle extends Shape {
     this.context.lineWidth = oldLineWidth;
   }
 
-  static drawPreview(context, x, y, width, height, state) {
-    context.putImageData(state.contextImageData, 0, 0);
+  static drawPreview(context, x, y, width, height, shapePreview) {
+    context.putImageData(shapePreview, 0, 0);
     context.beginPath();
     context.strokeRect(x, y, width, height);
     context.closePath();

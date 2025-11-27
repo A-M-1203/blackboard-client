@@ -51,8 +51,8 @@ export default class Oval extends Shape {
     this.context.lineWidth = oldLineWidth;
   }
 
-  static drawPreview(startX, startY, endX, endY, context, state) {
-    context.putImageData(state.contextImageData, 0, 0);
+  static drawPreview(startX, startY, endX, endY, context, shapePreview) {
+    context.putImageData(shapePreview, 0, 0);
 
     const boundingRectangleHeight = endY - startY;
     const boundingRectangleWidth = endX - startX;

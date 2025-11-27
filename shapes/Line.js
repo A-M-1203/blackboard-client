@@ -47,8 +47,8 @@ export default class Line extends Shape {
     this.context.lineWidth = oldLineWidth;
   }
 
-  static drawPreview(context, x, y, endX, endY, state) {
-    context.putImageData(state.contextImageData, 0, 0);
+  static drawPreview(context, x, y, endX, endY, shapePreview) {
+    context.putImageData(shapePreview, 0, 0);
     context.beginPath();
     context.moveTo(x, y);
     context.lineTo(endX, endY);
