@@ -117,7 +117,7 @@ export default class SelectTool {
     this.shapes.forEach((shape) => shape.draw());
 
     if (this.selectedShape) {
-      this.selectedShape.drawClickedOutline("#ffff11");
+      this.selectedShape.drawClickedOutline();
     }
   }
 }

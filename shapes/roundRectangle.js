@@ -1,6 +1,6 @@
 import Shape from "./shape.js";
 
-export default class Rectangle extends Shape {
+export default class RoundRectangle extends Shape {
   constructor(
     startX,
     startY,
@@ -33,18 +33,25 @@ export default class Rectangle extends Shape {
     this.context.lineWidth = this.lineWidth;
 
     this.context.beginPath();
-    this.context.fillRect(
+
+    this.context.roundRect(
       this.boundingRectangle.points[0].x,
       this.boundingRectangle.points[0].y,
       this.boundingRectangle.width,
-      this.boundingRectangle.height
+      this.boundingRectangle.height,
+      20
     );
-    this.context.strokeRect(
+    this.context.fill();
+
+    this.context.roundRect(
       this.boundingRectangle.points[0].x + this.lineWidth / 2,
       this.boundingRectangle.points[0].y + this.lineWidth / 2,
       this.boundingRectangle.width - this.lineWidth,
-      this.boundingRectangle.height - this.lineWidth
+      this.boundingRectangle.height - this.lineWidth,
+      20
     );
+
+    this.context.stroke();
 
     this.context.closePath();
     this.context.strokeStyle = oldStrokeStyle;
@@ -54,8 +61,10 @@ export default class Rectangle extends Shape {
 
   static drawPreview(startX, startY, endX, endY, context, shapePreview) {
     context.putImageData(shapePreview, 0, 0);
+
     context.beginPath();
-    context.strokeRect(startX, startY, endX - startX, endY - startY);
+    context.roundRect(startX, startY, endX - startX, endY - startY, 20);
     context.closePath();
+    context.stroke();
   }
 }

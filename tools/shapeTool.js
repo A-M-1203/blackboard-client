@@ -2,9 +2,9 @@ import Rectangle from "../shapes/Rectangle.js";
 import Oval from "../shapes/Oval.js";
 import Triangle from "../shapes/Triangle.js";
 import Diamond from "../shapes/diamond.js";
-import Star from "../shapes/star.js";
 import FourPointStar from "../shapes/fourPointStar.js";
 import FivePointStar from "../shapes/fivePointStar.js";
+import RoundRectangle from "../shapes/roundRectangle.js";
 
 export default class ShapeTool {
   constructor(
@@ -63,11 +63,11 @@ export default class ShapeTool {
           const height = mouseY - this.shapeStartY;
 
           Rectangle.drawPreview(
-            this.context,
             this.shapeStartX,
             this.shapeStartY,
-            width,
-            height,
+            mouseX,
+            mouseY,
+            this.context,
             this.shapePreview
           );
           break;
@@ -113,6 +113,16 @@ export default class ShapeTool {
           break;
         case "A":
           FivePointStar.drawPreview(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.shapePreview
+          );
+          break;
+        case "X":
+          RoundRectangle.drawPreview(
             this.shapeStartX,
             this.shapeStartY,
             mouseX,
@@ -215,6 +225,21 @@ export default class ShapeTool {
             this.lineWidth
           )
         );
+        break;
+      case "X":
+        this.shapes.push(
+          new RoundRectangle(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.strokeColor,
+            this.fillColor,
+            this.lineWidth
+          )
+        );
+        break;
     }
     this.drawShapes();
   }

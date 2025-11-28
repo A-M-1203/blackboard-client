@@ -1,5 +1,9 @@
 import BoundingRectangle from "./boundingRectangle.js";
 
+const CLICKED_OUTLINE_COLOR = "#ffffff";
+const CLICKED_OUTLINE_WIDTH = 3.0;
+const RESIZE_POINT_RADIUS = 5;
+
 export default class Shape {
   constructor(
     startX,
@@ -22,12 +26,12 @@ export default class Shape {
     return this.boundingRectangle.isClicked(clickX, clickY);
   }
 
-  drawClickedOutline(outlineColor) {
+  drawClickedOutline() {
     const oldFillStyle = this.context.fillStyle;
     const oldStrokeStyle = this.context.strokeStyle;
     const oldLineWidth = this.context.lineWidth;
-    this.context.strokeStyle = outlineColor;
-    this.context.lineWidth = 3.0;
+    this.context.strokeStyle = CLICKED_OUTLINE_COLOR;
+    this.context.lineWidth = CLICKED_OUTLINE_WIDTH;
     this.context.setLineDash([5, 3]);
     this.context.strokeRect(
       this.boundingRectangle.points[0].x,
@@ -45,7 +49,7 @@ export default class Shape {
     this.context.arc(
       this.boundingRectangle.points[0].x,
       this.boundingRectangle.points[0].y,
-      5,
+      RESIZE_POINT_RADIUS,
       0,
       2 * Math.PI
     );
@@ -58,7 +62,7 @@ export default class Shape {
     this.context.arc(
       this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
       this.boundingRectangle.points[0].y,
-      5,
+      RESIZE_POINT_RADIUS,
       0,
       2 * Math.PI
     );
@@ -71,7 +75,7 @@ export default class Shape {
     this.context.arc(
       this.boundingRectangle.points[1].x,
       this.boundingRectangle.points[1].y,
-      5,
+      RESIZE_POINT_RADIUS,
       0,
       2 * Math.PI
     );
@@ -84,7 +88,7 @@ export default class Shape {
     this.context.arc(
       this.boundingRectangle.points[1].x,
       this.boundingRectangle.points[1].y + this.boundingRectangle.height / 2,
-      5,
+      RESIZE_POINT_RADIUS,
       0,
       2 * Math.PI
     );
@@ -97,7 +101,7 @@ export default class Shape {
     this.context.arc(
       this.boundingRectangle.points[2].x,
       this.boundingRectangle.points[2].y,
-      5,
+      RESIZE_POINT_RADIUS,
       0,
       2 * Math.PI
     );
@@ -105,12 +109,12 @@ export default class Shape {
     this.context.stroke();
     this.context.closePath();
 
-    // resize point 5
+    // resize point RESIZE_POINT_RADIUS
     this.context.beginPath();
     this.context.arc(
       this.boundingRectangle.points[2].x - this.boundingRectangle.width / 2,
       this.boundingRectangle.points[2].y,
-      5,
+      RESIZE_POINT_RADIUS,
       0,
       2 * Math.PI
     );
@@ -123,7 +127,7 @@ export default class Shape {
     this.context.arc(
       this.boundingRectangle.points[3].x,
       this.boundingRectangle.points[3].y,
-      5,
+      RESIZE_POINT_RADIUS,
       0,
       2 * Math.PI
     );
@@ -136,7 +140,7 @@ export default class Shape {
     this.context.arc(
       this.boundingRectangle.points[3].x,
       this.boundingRectangle.points[3].y - this.boundingRectangle.height / 2,
-      5,
+      RESIZE_POINT_RADIUS,
       0,
       2 * Math.PI
     );
@@ -267,7 +271,7 @@ export default class Shape {
   }
 
   isResizePointClicked(clickX, clickY) {
-    const radius = 9;
+    const radius = RESIZE_POINT_RADIUS + 4;
 
     // resize point 0
     let deltaX = clickX - this.boundingRectangle.points[0].x;
