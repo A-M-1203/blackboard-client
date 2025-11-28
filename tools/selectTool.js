@@ -7,6 +7,7 @@ export default class SelectTool {
     this.selectedResizePoint = -1;
     this.draggingOffsetX = undefined;
     this.draggingOffsetY = undefined;
+    this.shiftPressed = false;
   }
 
   activate(shapes) {
@@ -106,17 +107,34 @@ export default class SelectTool {
           this.selectedShape.moveRight();
           break;
         case "ArrowUp":
-          this.selectedShape.moveUp();
+          if (this.shiftPressed) {
+            this.selectedShape.grow();
+          } else {
+            this.selectedShape.moveUp();
+          }
           break;
         case "ArrowDown":
-          this.selectedShape.moveDown();
+          if (this.shiftPressed) {
+            this.selectedShape.shrink();
+          } else {
+            this.selectedShape.moveDown();
+          }
+          break;
+        case "Shift":
+          this.shiftPressed = true;
           break;
       }
       this.drawShapes();
     }
   }
 
-  handleKeyRelease(key) {}
+  handleKeyRelease(key) {
+    switch (key) {
+      case "Shift":
+        this.shiftPressed = false;
+        break;
+    }
+  }
 
   drawShapes() {
     this.context.clearRect(

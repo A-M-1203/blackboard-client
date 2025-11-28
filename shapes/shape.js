@@ -4,6 +4,8 @@ const CLICKED_OUTLINE_COLOR = "#ffffff";
 const CLICKED_OUTLINE_WIDTH = 3.0;
 const RESIZE_POINT_RADIUS = 5;
 const MOVE_FACTOR = 5;
+const GROW_FACTOR = 5;
+const SHRINK_FACTOR = 5;
 
 export default class Shape {
   constructor(
@@ -25,6 +27,44 @@ export default class Shape {
 
   isClicked(clickX, clickY) {
     return this.boundingRectangle.isClicked(clickX, clickY);
+  }
+
+  grow() {
+    this.boundingRectangle.points[0].x -= GROW_FACTOR;
+    this.boundingRectangle.points[0].y -= GROW_FACTOR;
+
+    this.boundingRectangle.points[1].x += GROW_FACTOR;
+    this.boundingRectangle.points[1].y -= GROW_FACTOR;
+
+    this.boundingRectangle.points[2].x += GROW_FACTOR;
+    this.boundingRectangle.points[2].y += GROW_FACTOR;
+
+    this.boundingRectangle.points[3].x -= GROW_FACTOR;
+    this.boundingRectangle.points[3].y += GROW_FACTOR;
+
+    this.boundingRectangle.width =
+      this.boundingRectangle.points[1].x - this.boundingRectangle.points[0].x;
+    this.boundingRectangle.height =
+      this.boundingRectangle.points[2].y - this.boundingRectangle.points[1].y;
+  }
+
+  shrink() {
+    this.boundingRectangle.points[0].x += SHRINK_FACTOR;
+    this.boundingRectangle.points[0].y += SHRINK_FACTOR;
+
+    this.boundingRectangle.points[1].x -= SHRINK_FACTOR;
+    this.boundingRectangle.points[1].y += SHRINK_FACTOR;
+
+    this.boundingRectangle.points[2].x -= SHRINK_FACTOR;
+    this.boundingRectangle.points[2].y -= SHRINK_FACTOR;
+
+    this.boundingRectangle.points[3].x += SHRINK_FACTOR;
+    this.boundingRectangle.points[3].y -= SHRINK_FACTOR;
+
+    this.boundingRectangle.width =
+      this.boundingRectangle.points[1].x - this.boundingRectangle.points[0].x;
+    this.boundingRectangle.height =
+      this.boundingRectangle.points[2].y - this.boundingRectangle.points[1].y;
   }
 
   moveLeft() {
