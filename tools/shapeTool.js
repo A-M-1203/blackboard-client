@@ -3,6 +3,7 @@ import Oval from "../shapes/Oval.js";
 import Triangle from "../shapes/Triangle.js";
 import Diamond from "../shapes/diamond.js";
 import Star from "../shapes/star.js";
+import FourPointStar from "../shapes/fourPointStar.js";
 
 export default class ShapeTool {
   constructor(
@@ -100,7 +101,7 @@ export default class ShapeTool {
           );
           break;
         case "Q":
-          Star.drawPreview(
+          FourPointStar.drawPreview(
             this.shapeStartX,
             this.shapeStartY,
             mouseX,
@@ -178,7 +179,7 @@ export default class ShapeTool {
         break;
       case "Q":
         this.shapes.push(
-          new Star(
+          new FourPointStar(
             this.shapeStartX,
             this.shapeStartY,
             mouseX,

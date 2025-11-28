@@ -46,6 +46,7 @@ export default class Oval extends Shape {
     this.context.fill();
     this.context.stroke();
     this.context.closePath();
+
     this.context.strokeStyle = oldStrokeStyle;
     this.context.fillStyle = oldFillStyle;
     this.context.lineWidth = oldLineWidth;

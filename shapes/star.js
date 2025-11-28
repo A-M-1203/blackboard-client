@@ -30,6 +30,10 @@ export default class Star extends Shape {
     const oldFillStyle = this.context.fillStyle;
     const oldLineWidth = this.context.lineWidth;
 
+    this.context.strokeStyle = this.strokeColor;
+    this.context.fillStyle = this.fillColor;
+    this.context.lineWidth = this.lineWidth;
+
     this.context.beginPath();
     this.context.moveTo(
       this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
