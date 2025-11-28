@@ -6,6 +6,10 @@ import FourPointStar from "../shapes/fourPointStar.js";
 import FivePointStar from "../shapes/fivePointStar.js";
 import RoundRectangle from "../shapes/roundRectangle.js";
 import RightTriangle from "../shapes/rightTriangle.js";
+import FatArrowUp from "../shapes/fatArrowUp.js";
+import FatArrowLeft from "../shapes/fatArrowLeft.js";
+import FatArrowRight from "../shapes/fatArrowRight.js";
+import FatArrowDown from "../shapes/fatArrowDown.js";
 
 export default class ShapeTool {
   constructor(
@@ -138,6 +142,47 @@ export default class ShapeTool {
             this.context,
             this.shapePreview
           );
+          break;
+        case "I":
+          FatArrowUp.drawPreview(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.shapePreview
+          );
+          break;
+        case "J":
+          FatArrowLeft.drawPreview(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.shapePreview
+          );
+          break;
+        case "L":
+          FatArrowRight.drawPreview(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.shapePreview
+          );
+          break;
+        case "K":
+          FatArrowDown.drawPreview(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.shapePreview
+          );
+          break;
       }
     }
   }
@@ -260,6 +305,63 @@ export default class ShapeTool {
             this.lineWidth
           )
         );
+        break;
+      case "I":
+        this.shapes.push(
+          new FatArrowUp(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.strokeColor,
+            this.fillColor,
+            this.lineWidth
+          )
+        );
+        break;
+      case "J":
+        this.shapes.push(
+          new FatArrowLeft(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.strokeColor,
+            this.fillColor,
+            this.lineWidth
+          )
+        );
+        break;
+      case "L":
+        this.shapes.push(
+          new FatArrowRight(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.strokeColor,
+            this.fillColor,
+            this.lineWidth
+          )
+        );
+        break;
+      case "K":
+        this.shapes.push(
+          new FatArrowDown(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.strokeColor,
+            this.fillColor,
+            this.lineWidth
+          )
+        );
+        break;
     }
     this.drawShapes();
   }
