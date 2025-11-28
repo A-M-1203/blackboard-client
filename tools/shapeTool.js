@@ -4,6 +4,7 @@ import Triangle from "../shapes/Triangle.js";
 import Diamond from "../shapes/diamond.js";
 import Star from "../shapes/star.js";
 import FourPointStar from "../shapes/fourPointStar.js";
+import FivePointStar from "../shapes/fivePointStar.js";
 
 export default class ShapeTool {
   constructor(
@@ -110,6 +111,16 @@ export default class ShapeTool {
             this.shapePreview
           );
           break;
+        case "A":
+          FivePointStar.drawPreview(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.shapePreview
+          );
+          break;
       }
     }
   }
@@ -191,6 +202,19 @@ export default class ShapeTool {
           )
         );
         break;
+      case "A":
+        this.shapes.push(
+          new FivePointStar(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.strokeColor,
+            this.fillColor,
+            this.lineWidth
+          )
+        );
     }
     this.drawShapes();
   }
