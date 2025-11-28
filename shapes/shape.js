@@ -3,6 +3,7 @@ import BoundingRectangle from "./boundingRectangle.js";
 const CLICKED_OUTLINE_COLOR = "#ffffff";
 const CLICKED_OUTLINE_WIDTH = 3.0;
 const RESIZE_POINT_RADIUS = 5;
+const MOVE_FACTOR = 5;
 
 export default class Shape {
   constructor(
@@ -24,6 +25,30 @@ export default class Shape {
 
   isClicked(clickX, clickY) {
     return this.boundingRectangle.isClicked(clickX, clickY);
+  }
+
+  moveLeft() {
+    for (const point of this.boundingRectangle.points) {
+      point.x -= MOVE_FACTOR;
+    }
+  }
+
+  moveRight() {
+    for (const point of this.boundingRectangle.points) {
+      point.x += MOVE_FACTOR;
+    }
+  }
+
+  moveUp() {
+    for (const point of this.boundingRectangle.points) {
+      point.y -= MOVE_FACTOR;
+    }
+  }
+
+  moveDown() {
+    for (const point of this.boundingRectangle.points) {
+      point.y += MOVE_FACTOR;
+    }
   }
 
   drawClickedOutline() {

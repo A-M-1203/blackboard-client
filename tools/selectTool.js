@@ -99,6 +99,18 @@ export default class SelectTool {
             this.selectedShape.lineWidth -= 1;
           }
           break;
+        case "ArrowLeft":
+          this.selectedShape.moveLeft();
+          break;
+        case "ArrowRight":
+          this.selectedShape.moveRight();
+          break;
+        case "ArrowUp":
+          this.selectedShape.moveUp();
+          break;
+        case "ArrowDown":
+          this.selectedShape.moveDown();
+          break;
       }
       this.drawShapes();
     }

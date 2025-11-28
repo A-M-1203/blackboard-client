@@ -1,5 +1,7 @@
 import Shape from "./shape.js";
 
+const CORNER_RADIUS = 20;
+
 export default class RoundRectangle extends Shape {
   constructor(
     startX,
@@ -39,7 +41,7 @@ export default class RoundRectangle extends Shape {
       this.boundingRectangle.points[0].y,
       this.boundingRectangle.width,
       this.boundingRectangle.height,
-      20
+      CORNER_RADIUS
     );
     this.context.fill();
 
@@ -48,7 +50,7 @@ export default class RoundRectangle extends Shape {
       this.boundingRectangle.points[0].y + this.lineWidth / 2,
       this.boundingRectangle.width - this.lineWidth,
       this.boundingRectangle.height - this.lineWidth,
-      20
+      CORNER_RADIUS
     );
 
     this.context.stroke();
@@ -63,7 +65,13 @@ export default class RoundRectangle extends Shape {
     context.putImageData(shapePreview, 0, 0);
 
     context.beginPath();
-    context.roundRect(startX, startY, endX - startX, endY - startY, 20);
+    context.roundRect(
+      startX,
+      startY,
+      endX - startX,
+      endY - startY,
+      CORNER_RADIUS
+    );
     context.closePath();
     context.stroke();
   }

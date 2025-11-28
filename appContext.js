@@ -78,6 +78,10 @@ export default class AppContext {
       case "+":
       case "-":
       case "Shift":
+      case "ArrowLeft":
+      case "ArrowRight":
+      case "ArrowUp":
+      case "ArrowDown":
         this.selectedTool.handleKeyPress(key);
         break;
     }
