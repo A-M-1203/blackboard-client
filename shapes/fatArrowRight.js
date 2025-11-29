@@ -21,6 +21,8 @@ export default class FatArrowRight extends Shape {
       fillColor,
       lineWidth
     );
+    this.startX = startX;
+    this.endX = endX;
   }
 
   draw() {
@@ -33,34 +35,65 @@ export default class FatArrowRight extends Shape {
     this.context.lineWidth = this.lineWidth;
 
     this.context.beginPath();
-    this.context.moveTo(
-      this.boundingRectangle.points[0].x,
-      this.boundingRectangle.points[0].y + this.boundingRectangle.height / 4
-    );
-    this.context.lineTo(
-      this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
-      this.boundingRectangle.points[0].y + this.boundingRectangle.height / 4
-    );
-    this.context.lineTo(
-      this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
-      this.boundingRectangle.points[0].y
-    );
-    this.context.lineTo(
-      this.boundingRectangle.points[1].x,
-      this.boundingRectangle.points[1].y + this.boundingRectangle.height / 2
-    );
-    this.context.lineTo(
-      this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
-      this.boundingRectangle.points[2].y
-    );
-    this.context.lineTo(
-      this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
-      this.boundingRectangle.points[2].y - this.boundingRectangle.height / 4
-    );
-    this.context.lineTo(
-      this.boundingRectangle.points[0].x,
-      this.boundingRectangle.points[2].y - this.boundingRectangle.height / 4
-    );
+    if (this.endX < this.startX) {
+      this.context.moveTo(
+        this.boundingRectangle.points[0].x,
+        this.boundingRectangle.points[0].y + this.boundingRectangle.height / 2
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[0].y
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[0].y + this.boundingRectangle.height / 4
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[1].x,
+        this.boundingRectangle.points[1].y + this.boundingRectangle.height / 4
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[1].x,
+        this.boundingRectangle.points[2].y - this.boundingRectangle.height / 4
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[2].y - this.boundingRectangle.height / 4
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[2].y
+      );
+    } else {
+      this.context.moveTo(
+        this.boundingRectangle.points[0].x,
+        this.boundingRectangle.points[0].y + this.boundingRectangle.height / 4
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[0].y + this.boundingRectangle.height / 4
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[0].y
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[1].x,
+        this.boundingRectangle.points[1].y + this.boundingRectangle.height / 2
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[2].y
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x + this.boundingRectangle.width / 2,
+        this.boundingRectangle.points[2].y - this.boundingRectangle.height / 4
+      );
+      this.context.lineTo(
+        this.boundingRectangle.points[0].x,
+        this.boundingRectangle.points[2].y - this.boundingRectangle.height / 4
+      );
+    }
 
     this.context.fill();
     this.context.closePath();
@@ -71,5 +104,27 @@ export default class FatArrowRight extends Shape {
     this.context.lineWidth = oldLineWidth;
   }
 
-  static drawPreview(startX, startY, endX, endY, context, shapePreview) {}
+  static drawPreview(startX, startY, endX, endY, context, shapePreview) {
+    context.putImageData(shapePreview, 0, 0);
+    const boundingRectangleWidth = endX - startX;
+    const boundingRectangleHeight = endY - startY;
+    context.beginPath();
+
+    context.moveTo(startX, startY + boundingRectangleHeight / 4);
+    context.lineTo(
+      startX + boundingRectangleWidth / 2,
+      startY + boundingRectangleHeight / 4
+    );
+    context.lineTo(startX + boundingRectangleWidth / 2, startY);
+    context.lineTo(endX, startY + boundingRectangleHeight / 2);
+    context.lineTo(startX + boundingRectangleWidth / 2, endY);
+    context.lineTo(
+      startX + boundingRectangleWidth / 2,
+      endY - boundingRectangleHeight / 4
+    );
+    context.lineTo(startX, endY - boundingRectangleHeight / 4);
+
+    context.closePath();
+    context.stroke();
+  }
 }
