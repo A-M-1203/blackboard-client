@@ -25,6 +25,7 @@ export default class Line extends Shape {
     this.startY = startY;
     this.endX = endX;
     this.endY = endY;
+    this.tolerance = 20;
   }
 
   draw() {
@@ -37,8 +38,14 @@ export default class Line extends Shape {
     this.context.lineWidth = this.lineWidth;
 
     this.context.beginPath();
-    this.context.moveTo(this.startX, this.startY);
-    this.context.lineTo(this.endX, this.endY);
+    this.context.moveTo(
+      this.boundingRectangle.points[0].x,
+      this.boundingRectangle.points[0].y + this.boundingRectangle.height / 2
+    );
+    this.context.lineTo(
+      this.boundingRectangle.points[1].x,
+      this.boundingRectangle.points[1].y + this.boundingRectangle.height / 2
+    );
     this.context.stroke();
     this.context.closePath();
 
@@ -47,10 +54,10 @@ export default class Line extends Shape {
     this.context.lineWidth = oldLineWidth;
   }
 
-  static drawPreview(context, x, y, endX, endY, shapePreview) {
+  static drawPreview(startX, startY, endX, endY, context, shapePreview) {
     context.putImageData(shapePreview, 0, 0);
     context.beginPath();
-    context.moveTo(x, y);
+    context.moveTo(startX, startY);
     context.lineTo(endX, endY);
     context.stroke();
     context.closePath();

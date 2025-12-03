@@ -1,6 +1,7 @@
 import Rectangle from "../shapes/Rectangle.js";
 import Oval from "../shapes/Oval.js";
 import Triangle from "../shapes/Triangle.js";
+import Line from "../shapes/Line.js";
 import Diamond from "../shapes/diamond.js";
 import FourPointStar from "../shapes/fourPointStar.js";
 import FivePointStar from "../shapes/fivePointStar.js";
@@ -183,6 +184,16 @@ export default class ShapeTool {
             this.shapePreview
           );
           break;
+        case "W":
+          Line.drawPreview(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.shapePreview
+          );
+          break;
       }
     }
   }
@@ -352,6 +363,20 @@ export default class ShapeTool {
       case "K":
         this.shapes.push(
           new FatArrowDown(
+            this.shapeStartX,
+            this.shapeStartY,
+            mouseX,
+            mouseY,
+            this.context,
+            this.strokeColor,
+            this.fillColor,
+            this.lineWidth
+          )
+        );
+        break;
+      case "W":
+        this.shapes.push(
+          new Line(
             this.shapeStartX,
             this.shapeStartY,
             mouseX,

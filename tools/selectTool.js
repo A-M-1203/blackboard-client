@@ -48,27 +48,12 @@ export default class SelectTool {
       if (this.selectedResizePoint > -1) {
         this.selectedShape.resize(this.selectedResizePoint, mouseX, mouseY);
       } else if (this.selectedShape) {
-        this.selectedShape.boundingRectangle.points[0].x =
-          mouseX - this.draggingOffsetX;
-        this.selectedShape.boundingRectangle.points[0].y =
-          mouseY - this.draggingOffsetY;
-
-        this.selectedShape.boundingRectangle.points[1].x =
-          this.selectedShape.boundingRectangle.points[0].x +
-          this.selectedShape.boundingRectangle.width;
-        this.selectedShape.boundingRectangle.points[1].y =
-          this.selectedShape.boundingRectangle.points[0].y;
-
-        this.selectedShape.boundingRectangle.points[2].x =
-          this.selectedShape.boundingRectangle.points[1].x;
-        this.selectedShape.boundingRectangle.points[2].y =
-          this.selectedShape.boundingRectangle.points[1].y +
-          this.selectedShape.boundingRectangle.height;
-
-        this.selectedShape.boundingRectangle.points[3].x =
-          this.selectedShape.boundingRectangle.points[0].x;
-        this.selectedShape.boundingRectangle.points[3].y =
-          this.selectedShape.boundingRectangle.points[2].y;
+        this.selectedShape.move(
+          mouseX,
+          mouseY,
+          this.draggingOffsetX,
+          this.draggingOffsetY
+        );
       }
       this.drawShapes();
     }

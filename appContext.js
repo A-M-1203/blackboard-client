@@ -74,6 +74,7 @@ export default class AppContext {
       case "J":
       case "L":
       case "K":
+      case "W":
         this.selectedTool = this.tools[4].activate(key, this.shapes);
         break;
       case "r":

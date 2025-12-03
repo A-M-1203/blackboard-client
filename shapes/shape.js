@@ -29,6 +29,22 @@ export default class Shape {
     return this.boundingRectangle.isClicked(clickX, clickY);
   }
 
+  move(mouseX, mouseY, draggingOffsetX, draggingOffsetY) {
+    this.boundingRectangle.points[0].x = mouseX - draggingOffsetX;
+    this.boundingRectangle.points[0].y = mouseY - draggingOffsetY;
+
+    this.boundingRectangle.points[1].x =
+      this.boundingRectangle.points[0].x + this.boundingRectangle.width;
+    this.boundingRectangle.points[1].y = this.boundingRectangle.points[0].y;
+
+    this.boundingRectangle.points[2].x = this.boundingRectangle.points[1].x;
+    this.boundingRectangle.points[2].y =
+      this.boundingRectangle.points[1].y + this.boundingRectangle.height;
+
+    this.boundingRectangle.points[3].x = this.boundingRectangle.points[0].x;
+    this.boundingRectangle.points[3].y = this.boundingRectangle.points[2].y;
+  }
+
   grow() {
     this.boundingRectangle.points[0].x -= GROW_FACTOR;
     this.boundingRectangle.points[0].y -= GROW_FACTOR;
