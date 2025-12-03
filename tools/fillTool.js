@@ -12,10 +12,11 @@ export default class FillTool {
   }
 
   handleMousePress(mouseX, mouseY) {
-    for (const shape of this.shapes) {
-      if (shape.isClicked(mouseX, mouseY)) {
-        shape.fillColor = this.context.fillStyle;
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      if (this.shapes[i].isClicked(mouseX, mouseY)) {
+        this.shapes[i].fillColor = this.context.fillStyle;
         this.drawShapes();
+        break;
       }
     }
   }
@@ -26,13 +27,13 @@ export default class FillTool {
   handleKeyPress(key) {
     switch (key) {
       case "r":
-        this.context.fillStyle = this.fillColor = "#ff0000";
+        this.context.fillStyle = this.fillColor = "#800000ff";
         break;
       case "g":
-        this.context.fillStyle = this.fillColor = "#00ff00";
+        this.context.fillStyle = this.fillColor = "#008000ff";
         break;
       case "b":
-        this.context.fillStyle = this.fillColor = "#0000ff";
+        this.context.fillStyle = this.fillColor = "#000080ff";
         break;
       case "w":
         this.context.fillStyle = this.fillColor = "#ffffff";

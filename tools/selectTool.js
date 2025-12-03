@@ -27,13 +27,16 @@ export default class SelectTool {
         return;
       }
     }
+
     this.selectedShape = undefined;
-    for (const shape of this.shapes) {
-      if (shape.isClicked(mouseX, mouseY)) {
-        this.selectedShape = shape;
-        this.draggingShape = shape;
-        this.draggingOffsetX = mouseX - shape.boundingRectangle.points[0].x;
-        this.draggingOffsetY = mouseY - shape.boundingRectangle.points[0].y;
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      if (this.shapes[i].isClicked(mouseX, mouseY)) {
+        this.selectedShape = this.shapes[i];
+        this.draggingShape = this.shapes[i];
+        this.draggingOffsetX =
+          mouseX - this.shapes[i].boundingRectangle.points[0].x;
+        this.draggingOffsetY =
+          mouseY - this.shapes[i].boundingRectangle.points[0].y;
         break;
       }
     }
@@ -79,13 +82,13 @@ export default class SelectTool {
     if (this.selectedShape) {
       switch (key) {
         case "r":
-          this.selectedShape.strokeColor = "#ff0000";
+          this.selectedShape.strokeColor = "#800000ff";
           break;
         case "g":
-          this.selectedShape.strokeColor = "#00ff00";
+          this.selectedShape.strokeColor = "#008000ff";
           break;
         case "b":
-          this.selectedShape.strokeColor = "#0000ff";
+          this.selectedShape.strokeColor = "#000080ff";
           break;
         case "w":
           this.selectedShape.strokeColor = "#ffffff";

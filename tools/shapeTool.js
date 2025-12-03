@@ -207,6 +207,7 @@ export default class ShapeTool {
             this.lineWidth
           )
         );
+
         break;
       case "O":
         this.shapes.push(
@@ -363,7 +364,8 @@ export default class ShapeTool {
         );
         break;
     }
-    this.drawShapes();
+    this.shapes[this.shapes.length - 1].draw();
+    // this.drawShapes();
   }
 
   handleKeyPress(key) {
@@ -379,13 +381,13 @@ export default class ShapeTool {
         }
         break;
       case "r":
-        this.context.strokeStyle = this.strokeColor = "#ff0000";
+        this.context.strokeStyle = this.strokeColor = "#800000ff";
         break;
       case "g":
-        this.context.strokeStyle = this.strokeColor = "#00ff00";
+        this.context.strokeStyle = this.strokeColor = "#008000ff";
         break;
       case "b":
-        this.context.strokeStyle = this.strokeColor = "#0000ff";
+        this.context.strokeStyle = this.strokeColor = "#000080ff";
         break;
       case "w":
         this.context.strokeStyle = this.strokeColor = "#ffffff";
