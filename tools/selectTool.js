@@ -20,7 +20,7 @@ export default class SelectTool {
     if (this.selectedShape) {
       this.selectedResizePoint = this.selectedShape.isResizePointClicked(
         mouseX,
-        mouseY
+        mouseY,
       );
 
       if (this.selectedResizePoint > -1) {
@@ -52,7 +52,7 @@ export default class SelectTool {
           mouseX,
           mouseY,
           this.draggingOffsetX,
-          this.draggingOffsetY
+          this.draggingOffsetY,
         );
       }
       this.drawShapes();
@@ -129,7 +129,7 @@ export default class SelectTool {
       0,
       0,
       this.context.canvas.width,
-      this.context.canvas.height
+      this.context.canvas.height,
     );
 
     this.shapes.forEach((shape) => shape.draw());

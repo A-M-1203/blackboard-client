@@ -48,7 +48,7 @@ export default class FillTool {
       0,
       0,
       this.context.canvas.width,
-      this.context.canvas.height
+      this.context.canvas.height,
     );
 
     this.shapes.forEach((shape) => shape.draw());

@@ -19,7 +19,7 @@ export default class ShapeTool {
     fillColor,
     lineWidth,
     canvasWidth,
-    canvasHeight
+    canvasHeight,
   ) {
     this.context = context;
     this.strokeColor = strokeColor;
@@ -53,7 +53,7 @@ export default class ShapeTool {
       0,
       0,
       this.canvasWidth,
-      this.canvasHeight
+      this.canvasHeight,
     );
   }
 
@@ -71,7 +71,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "O":
@@ -81,7 +81,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "T":
@@ -91,7 +91,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "D":
@@ -101,7 +101,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "Q":
@@ -111,7 +111,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "A":
@@ -121,7 +121,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "X":
@@ -131,7 +131,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "Z":
@@ -141,7 +141,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "I":
@@ -151,7 +151,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "J":
@@ -161,7 +161,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "L":
@@ -171,7 +171,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "K":
@@ -181,7 +181,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
         case "W":
@@ -191,7 +191,7 @@ export default class ShapeTool {
             mouseX,
             mouseY,
             this.context,
-            this.shapePreview
+            this.shapePreview,
           );
           break;
       }
@@ -215,8 +215,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
 
         break;
@@ -230,8 +230,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "T":
@@ -244,8 +244,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "D":
@@ -258,8 +258,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "Q":
@@ -272,8 +272,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "A":
@@ -286,8 +286,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "X":
@@ -300,8 +300,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "Z":
@@ -314,8 +314,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "I":
@@ -328,8 +328,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "J":
@@ -342,8 +342,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "L":
@@ -356,8 +356,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "K":
@@ -370,8 +370,8 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
       case "W":
@@ -384,13 +384,13 @@ export default class ShapeTool {
             this.context,
             this.strokeColor,
             this.fillColor,
-            this.lineWidth
-          )
+            this.lineWidth,
+          ),
         );
         break;
     }
-    this.shapes[this.shapes.length - 1].draw();
-    // this.drawShapes();
+    // this.shapes[this.shapes.length - 1].draw();
+    this.drawShapes();
   }
 
   handleKeyPress(key) {
@@ -436,7 +436,7 @@ export default class ShapeTool {
       0,
       0,
       this.context.canvas.width,
-      this.context.canvas.height
+      this.context.canvas.height,
     );
 
     this.shapes.forEach((shape) => shape.draw());

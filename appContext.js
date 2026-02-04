@@ -6,7 +6,7 @@ import ShapeTool from "./tools/shapeTool.js";
 
 const DEFAULT_BACKGROUND_COLOR = "#141414";
 const DEFAULT_STROKE_COLOR = "#ffffffff";
-const DEFAULT_FILL_COLOR = DEFAULT_BACKGROUND_COLOR;
+export const DEFAULT_FILL_COLOR = DEFAULT_BACKGROUND_COLOR;
 const DEFAULT_LINE_WIDTH = 1.0;
 
 export default class AppContext {
@@ -17,10 +17,10 @@ export default class AppContext {
     this.tools = [];
     this.tools.push(new SelectTool(context));
     this.tools.push(
-      new PencilTool(context, DEFAULT_STROKE_COLOR, DEFAULT_LINE_WIDTH)
+      new PencilTool(context, DEFAULT_STROKE_COLOR, DEFAULT_LINE_WIDTH),
     );
     this.tools.push(
-      new BrushTool(context, DEFAULT_STROKE_COLOR, DEFAULT_LINE_WIDTH)
+      new BrushTool(context, DEFAULT_STROKE_COLOR, DEFAULT_LINE_WIDTH),
     );
     this.tools.push(new FillTool(context, DEFAULT_FILL_COLOR));
     this.tools.push(
@@ -30,10 +30,10 @@ export default class AppContext {
         DEFAULT_FILL_COLOR,
         DEFAULT_LINE_WIDTH,
         context.canvas.width,
-        context.canvas.height
-      )
+        context.canvas.height,
+      ),
     );
-    this.selectedTool = this.tools[1].activate();
+    this.selectedTool = this.tools[1].activate(this.shapes);
   }
 
   handleMousePress(mouseX, mouseY) {
@@ -54,7 +54,7 @@ export default class AppContext {
         this.selectedTool = this.tools[0].activate(this.shapes);
         break;
       case "P":
-        this.selectedTool = this.tools[1].activate(key);
+        this.selectedTool = this.tools[1].activate(this.shapes);
         break;
       case "B":
         this.selectedTool = this.tools[2].activate(key);
