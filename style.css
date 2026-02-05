@@ -10,6 +10,102 @@ body {
   overflow: hidden;
 }
 
+.main-container {
+  display: flex;
+}
+
+.side-panel {
+  background-color: rgb(39, 35, 35);
+  border-right: 3px solid black;
+  min-width: 150px;
+  max-width: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-panel {
+  padding: 5px;
+  margin: 5px 5px 0 5px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.item-container {
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.item {
+  width: 35px;
+  min-height: 35px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.item:hover {
+  border: 3px solid black;
+  border-radius: 0;
+}
+
+.content {
+  min-width: 35px;
+  border: 2px solid green;
+}
+
+.red-color {
+  background-color: red;
+}
+
+.white-color {
+  background-color: white;
+}
+
+.green-color {
+  background-color: green;
+}
+
+.light-green-color {
+  background-color: lightgreen;
+}
+
+.blue-color {
+  background-color: blue;
+}
+
+.light-blue-color {
+  background-color: lightblue;
+}
+
+.black-color {
+  background-color: black;
+}
+
+.yellow-color {
+  background-color: yellow;
+}
+
+.orange-color {
+  background-color: orange;
+}
+
+.purple-color {
+  background-color: purple;
+}
+
+.pink-color {
+  background-color: pink;
+}
+
+.magenta-color {
+  background-color: magenta;
+}
+
+input[type="range"] {
+  width: 90px;
+}
+
 #canvas {
-  background-color: #141414;
+  background-color: rgb(33, 32, 32);
 }

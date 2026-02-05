@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,6 +9,76 @@
     <script defer type="module" src="main.js"></script>
   </head>
   <body>
-    <canvas id="canvas">Blackboard</canvas>
+    <div class="main-container">
+      <div class="side-panel">
+        <div class="sub-panel">
+          <div class="item-container">
+            <div class="item">Hnd</div>
+            <div class="item">Sel</div>
+            <div class="item">Pen</div>
+            <div class="item">Brsh</div>
+            <div class="item">Fill</div>
+            <div class="item">Ers</div>
+          </div>
+        </div>
+        <div class="sub-panel">
+          <div class="item-container">
+            <div class="item">Rect</div>
+            <div class="item">RRect</div>
+            <div class="item">Tri</div>
+            <div class="item">RATri</div>
+            <div class="item">Oval</div>
+            <div class="item">Star</div>
+          </div>
+        </div>
+        <div class="sub-panel">
+          <div class="item-container">
+            <div class="item black-color"></div>
+            <div class="item white-color"></div>
+            <div class="item green-color"></div>
+            <div class="item light-green-color"></div>
+            <div class="item blue-color"></div>
+            <div class="item light-blue-color"></div>
+            <div class="item red-color"></div>
+            <div class="item yellow-color"></div>
+            <div class="item orange-color"></div>
+            <div class="item purple-color"></div>
+            <div class="item pink-color"></div>
+            <div class="item magenta-color"></div>
+          </div>
+        </div>
+        <div class="sub-panel">
+          <div class="item-container">
+            <input class="item" type="color" id="color-picker" />
+            <button class="item">Con</button>
+            <button class="item">Rej</button>
+          </div>
+        </div>
+        <div class="sub-panel">
+          <div class="item-container">
+            <input
+              id="alpha"
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value="1"
+            />
+            <label for="alpha">1.0</label>
+          </div>
+        </div>
+        <div class="sub-panel">
+          <div class="item-container">
+            <div class="item white-color"></div>
+            <div class="item white-color"></div>
+            <div class="item white-color"></div>
+            <div class="item white-color"></div>
+            <div class="item white-color"></div>
+            <div class="item white-color"></div>
+          </div>
+        </div>
+      </div>
+      <canvas id="canvas"></canvas>
+    </div>
   </body>
 </html>
