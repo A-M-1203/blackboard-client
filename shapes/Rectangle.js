@@ -1,26 +1,8 @@
 import Shape from "./shape.js";
 
 export default class Rectangle extends Shape {
-  constructor(
-    startX,
-    startY,
-    endX,
-    endY,
-    context,
-    strokeColor,
-    fillColor,
-    lineWidth,
-  ) {
-    super(
-      startX,
-      startY,
-      endX,
-      endY,
-      context,
-      strokeColor,
-      fillColor,
-      lineWidth,
-    );
+  constructor(startX, startY, endX, endY, context) {
+    super(startX, startY, endX, endY, context);
   }
 
   draw() {

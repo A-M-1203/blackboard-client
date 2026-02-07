@@ -3,16 +3,11 @@ export default class SelectTool {
     this.context = context;
     this.mousePressed = false;
     this.shapes = shapes;
-    this.selectedShape = undefined;
+    this.selectedShape = null;
     this.selectedResizePoint = -1;
-    this.draggingOffsetX = undefined;
-    this.draggingOffsetY = undefined;
+    this.draggingOffsetX = null;
+    this.draggingOffsetY = null;
     this.shiftPressed = false;
-  }
-
-  activate(shapes) {
-    this.shapes = shapes;
-    return this;
   }
 
   handleMouseDown(mouseX, mouseY) {
@@ -28,7 +23,7 @@ export default class SelectTool {
       }
     }
 
-    this.selectedShape = undefined;
+    this.selectedShape = null;
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       if (this.shapes[i].isClicked(mouseX, mouseY)) {
         this.selectedShape = this.shapes[i];
@@ -44,19 +39,18 @@ export default class SelectTool {
   }
 
   handleMouseMove(mouseX, mouseY) {
-    if (this.mousePressed) {
-      if (this.selectedResizePoint > -1) {
-        this.selectedShape.resize(this.selectedResizePoint, mouseX, mouseY);
-      } else if (this.selectedShape) {
-        this.selectedShape.move(
-          mouseX,
-          mouseY,
-          this.draggingOffsetX,
-          this.draggingOffsetY,
-        );
-      }
-      this.drawShapes();
+    if (!this.mousePressed) return;
+    if (this.selectedResizePoint > -1) {
+      this.selectedShape.resize(this.selectedResizePoint, mouseX, mouseY);
+    } else if (this.selectedShape) {
+      this.selectedShape.move(
+        mouseX,
+        mouseY,
+        this.draggingOffsetX,
+        this.draggingOffsetY,
+      );
     }
+    this.drawShapes();
   }
 
   handleMouseUp(mouseX, mouseY) {
@@ -64,56 +58,55 @@ export default class SelectTool {
   }
 
   handleKeyDown(key) {
-    if (this.selectedShape) {
-      switch (key) {
-        case "r":
-          this.selectedShape.strokeColor = "#800000ff";
-          break;
-        case "g":
-          this.selectedShape.strokeColor = "#008000ff";
-          break;
-        case "b":
-          this.selectedShape.strokeColor = "#000080ff";
-          break;
-        case "w":
-          this.selectedShape.strokeColor = "#ffffff";
-          break;
-        case "+":
-          if (this.selectedShape.lineWidth < 100.0) {
-            this.selectedShape.lineWidth += 1;
-          }
-          break;
-        case "-":
-          if (this.selectedShape.lineWidth > 1.0) {
-            this.selectedShape.lineWidth -= 1;
-          }
-          break;
-        case "ArrowLeft":
-          this.selectedShape.moveLeft();
-          break;
-        case "ArrowRight":
-          this.selectedShape.moveRight();
-          break;
-        case "ArrowUp":
-          if (this.shiftPressed) {
-            this.selectedShape.grow();
-          } else {
-            this.selectedShape.moveUp();
-          }
-          break;
-        case "ArrowDown":
-          if (this.shiftPressed) {
-            this.selectedShape.shrink();
-          } else {
-            this.selectedShape.moveDown();
-          }
-          break;
-        case "Shift":
-          this.shiftPressed = true;
-          break;
-      }
-      this.drawShapes();
+    if (!this.selectedShape) return;
+    switch (key) {
+      case "r":
+        this.selectedShape.strokeColor = "#ff0000";
+        break;
+      case "g":
+        this.selectedShape.strokeColor = "#00ff00";
+        break;
+      case "b":
+        this.selectedShape.strokeColor = "#0000ff";
+        break;
+      case "w":
+        this.selectedShape.strokeColor = "#ffffff";
+        break;
+      case "+":
+        if (this.selectedShape.lineWidth < 30.0) {
+          this.selectedShape.lineWidth += 1;
+        }
+        break;
+      case "-":
+        if (this.selectedShape.lineWidth > 1.0) {
+          this.selectedShape.lineWidth -= 1;
+        }
+        break;
+      case "ArrowLeft":
+        this.selectedShape.moveLeft();
+        break;
+      case "ArrowRight":
+        this.selectedShape.moveRight();
+        break;
+      case "ArrowUp":
+        if (this.shiftPressed) {
+          this.selectedShape.grow();
+        } else {
+          this.selectedShape.moveUp();
+        }
+        break;
+      case "ArrowDown":
+        if (this.shiftPressed) {
+          this.selectedShape.shrink();
+        } else {
+          this.selectedShape.moveDown();
+        }
+        break;
+      case "Shift":
+        this.shiftPressed = true;
+        break;
     }
+    this.drawShapes();
   }
 
   handleKeyUp(key) {
@@ -132,7 +125,9 @@ export default class SelectTool {
       this.context.canvas.height,
     );
 
-    this.shapes.forEach((shape) => shape.draw());
+    for (let i = 0; i < this.shapes.length; ++i) {
+      this.shapes[i].draw();
+    }
 
     if (this.selectedShape) {
       this.selectedShape.drawClickedOutline();

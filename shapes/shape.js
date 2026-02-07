@@ -8,21 +8,12 @@ const GROW_FACTOR = 5;
 const SHRINK_FACTOR = 5;
 
 export default class Shape {
-  constructor(
-    startX,
-    startY,
-    endX,
-    endY,
-    context,
-    strokeColor,
-    fillColor,
-    lineWidth
-  ) {
+  constructor(startX, startY, endX, endY, context) {
     this.boundingRectangle = new BoundingRectangle(startX, startY, endX, endY);
     this.context = context;
-    this.strokeColor = strokeColor;
-    this.fillColor = fillColor;
-    this.lineWidth = lineWidth;
+    this.strokeColor = this.context.strokeStyle;
+    this.fillColor = this.context.fillStyle;
+    this.lineWidth = this.context.lineWidth;
   }
 
   isClicked(clickX, clickY) {
@@ -118,7 +109,7 @@ export default class Shape {
       this.boundingRectangle.points[0].x,
       this.boundingRectangle.points[0].y,
       this.boundingRectangle.width,
-      this.boundingRectangle.height
+      this.boundingRectangle.height,
     );
     this.context.setLineDash([]);
 
@@ -132,7 +123,7 @@ export default class Shape {
       this.boundingRectangle.points[0].y,
       RESIZE_POINT_RADIUS,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();
@@ -145,7 +136,7 @@ export default class Shape {
       this.boundingRectangle.points[0].y,
       RESIZE_POINT_RADIUS,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();
@@ -158,7 +149,7 @@ export default class Shape {
       this.boundingRectangle.points[1].y,
       RESIZE_POINT_RADIUS,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();
@@ -171,7 +162,7 @@ export default class Shape {
       this.boundingRectangle.points[1].y + this.boundingRectangle.height / 2,
       RESIZE_POINT_RADIUS,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();
@@ -184,7 +175,7 @@ export default class Shape {
       this.boundingRectangle.points[2].y,
       RESIZE_POINT_RADIUS,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();
@@ -197,7 +188,7 @@ export default class Shape {
       this.boundingRectangle.points[2].y,
       RESIZE_POINT_RADIUS,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();
@@ -210,7 +201,7 @@ export default class Shape {
       this.boundingRectangle.points[3].y,
       RESIZE_POINT_RADIUS,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();
@@ -223,7 +214,7 @@ export default class Shape {
       this.boundingRectangle.points[3].y - this.boundingRectangle.height / 2,
       RESIZE_POINT_RADIUS,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();

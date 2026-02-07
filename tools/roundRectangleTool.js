@@ -41,6 +41,6 @@ export default class RoundRectangleTool extends Shape_Tool {
       ),
     );
 
-    this.drawShapes();
+    this.shapes[this.shapes.length - 1].draw();
   }
 }

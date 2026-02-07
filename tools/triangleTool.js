@@ -1,7 +1,7 @@
-import Shape_Tool from "./shapeTool.js";
-import Oval from "../shapes/Oval.js";
+import ShapeTool from "./shapeTool.js";
+import Triangle from "../shapes/Triangle.js";
 
-export default class OvalTool extends Shape_Tool {
+export default class TriangleTool extends ShapeTool {
   constructor(context, shapes) {
     super(context, shapes);
   }
@@ -12,7 +12,7 @@ export default class OvalTool extends Shape_Tool {
       mouseX = mouseY - this.shapeStartY + this.shapeStartX;
     }
 
-    Oval.drawPreview(
+    Triangle.drawPreview(
       this.shapeStartX,
       this.shapeStartY,
       mouseX,
@@ -29,7 +29,7 @@ export default class OvalTool extends Shape_Tool {
     }
 
     this.shapes.push(
-      new Oval(
+      new Triangle(
         this.shapeStartX,
         this.shapeStartY,
         mouseX,

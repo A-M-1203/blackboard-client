@@ -51,10 +51,8 @@ export default class FillTool {
       this.context.canvas.height,
     );
 
-    this.shapes.forEach((shape) => shape.draw());
-
-    if (this.selectedShape) {
-      this.selectedShape.drawClickedOutline("#ffff11");
+    for (let i = 0; i < this.shapes.length; ++i) {
+      this.shapes[i].draw();
     }
   }
 }

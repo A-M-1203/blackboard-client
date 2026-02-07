@@ -1,7 +1,7 @@
-import Shape_Tool from "./shapeTool.js";
+import ShapeTool from "./shapeTool.js";
 import Rectangle from "../shapes/Rectangle.js";
 
-export default class RectangleTool extends Shape_Tool {
+export default class RectangleTool extends ShapeTool {
   constructor(context, shapes) {
     super(context, shapes);
   }
@@ -41,6 +41,6 @@ export default class RectangleTool extends Shape_Tool {
       ),
     );
 
-    this.drawShapes();
+    this.shapes[this.shapes.length - 1].draw();
   }
 }

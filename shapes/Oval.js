@@ -1,26 +1,8 @@
 import Shape from "./shape.js";
 
 export default class Oval extends Shape {
-  constructor(
-    startX,
-    startY,
-    endX,
-    endY,
-    context,
-    strokeColor,
-    fillColor,
-    lineWidth
-  ) {
-    super(
-      startX,
-      startY,
-      endX,
-      endY,
-      context,
-      strokeColor,
-      fillColor,
-      lineWidth
-    );
+  constructor(startX, startY, endX, endY, context) {
+    super(startX, startY, endX, endY, context);
   }
 
   draw() {
@@ -40,7 +22,7 @@ export default class Oval extends Shape {
       this.boundingRectangle.height / 2 - this.lineWidth / 2,
       0,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
 
     this.context.fill();
@@ -65,7 +47,7 @@ export default class Oval extends Shape {
       Math.abs(boundingRectangleHeight / 2),
       Math.PI,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     context.stroke();
     context.closePath();
@@ -81,7 +63,7 @@ class Circle extends Shape {
     context,
     strokeColor,
     fillColor,
-    lineWidth
+    lineWidth,
   ) {
     super(
       startX,
@@ -91,7 +73,7 @@ class Circle extends Shape {
       context,
       strokeColor,
       fillColor,
-      lineWidth
+      lineWidth,
     );
   }
 
@@ -114,7 +96,7 @@ class Circle extends Shape {
         this.lineWidth / 2,
       this.boundingRectangle.width / 2 - this.lineWidth / 2,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     this.context.fill();
     this.context.stroke();
@@ -134,7 +116,7 @@ class Circle extends Shape {
       startY + boundingRectangleHeight / 2,
       boundingRectangleWidth / 2,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     context.stroke();
     context.closePath();
