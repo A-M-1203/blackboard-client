@@ -1,8 +1,9 @@
 export default class BrushTool {
-  constructor(context, strokeColor, lineWidth) {
+  constructor(context, strokeColor, lineWidth, shapes) {
     this.context = context;
     this.strokeColor = strokeColor;
     this.lineWidth = lineWidth;
+    this.shapes = shapes;
     this.mousePressed = false;
   }
 
@@ -12,7 +13,7 @@ export default class BrushTool {
     return this;
   }
 
-  handleMousePress(mouseX, mouseY) {
+  handleMouseDown(mouseX, mouseY) {
     this.mousePressed = true;
     this.context.beginPath();
     this.context.moveTo(mouseX, mouseY);
@@ -25,11 +26,11 @@ export default class BrushTool {
     }
   }
 
-  handleMouseRelease(mouseX, mouseY) {
+  handleMouseUp(mouseX, mouseY) {
     this.mousePressed = false;
   }
 
-  handleKeyPress(key) {
+  handleKeyDown(key) {
     switch (key) {
       case "+":
         if (this.lineWidth < 100.0) {
@@ -56,5 +57,5 @@ export default class BrushTool {
     }
   }
 
-  handleKeyRelease(key) {}
+  handleKeyUp(key) {}
 }

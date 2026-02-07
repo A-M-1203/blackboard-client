@@ -12,7 +12,88 @@ import FatArrowLeft from "../shapes/fatArrowLeft.js";
 import FatArrowRight from "../shapes/fatArrowRight.js";
 import FatArrowDown from "../shapes/fatArrowDown.js";
 
-export default class ShapeTool {
+export default class Shape_Tool {
+  constructor(context, shapes) {
+    this.context = context;
+    this.shapeStartX = null;
+    this.shapeStartY = null;
+    this.shapePreview = null;
+    this.shapes = shapes;
+  }
+
+  activate(shapes) {
+    this.shapes = shapes;
+    this.context.strokeStyle = this.strokeColor;
+    this.context.fillStyle = this.fillColor;
+    this.context.lineWidth = this.lineWidth;
+    return this;
+  }
+
+  handleMouseDown(mouseX, mouseY) {
+    this.mousePressed = true;
+    this.shapeStartX = mouseX;
+    this.shapeStartY = mouseY;
+    this.shapePreview = this.context.getImageData(
+      0,
+      0,
+      this.context.canvas.width,
+      this.context.canvas.height,
+    );
+  }
+
+  handleKeyDown(key) {
+    switch (key) {
+      case "+":
+        if (this.lineWidth < 30.0) {
+          this.context.lineWidth = this.lineWidth += 1;
+        }
+        break;
+      case "-":
+        if (this.lineWidth > 1.0) {
+          this.context.lineWidth = this.lineWidth -= 1;
+        }
+        break;
+      case "r":
+        this.context.strokeStyle = this.strokeColor = "#800000ff";
+        break;
+      case "g":
+        this.context.strokeStyle = this.strokeColor = "#008000ff";
+        break;
+      case "b":
+        this.context.strokeStyle = this.strokeColor = "#000080ff";
+        break;
+      case "w":
+        this.context.strokeStyle = this.strokeColor = "#ffffff";
+        break;
+      case "Shift":
+        this.shiftPressed = true;
+        break;
+    }
+  }
+
+  handleKeyRelease(key) {
+    switch (key) {
+      case "Shift":
+        this.shiftPressed = false;
+        break;
+    }
+  }
+
+  drawShapes() {
+    this.context.clearRect(
+      0,
+      0,
+      this.context.canvas.width,
+      this.context.canvas.height,
+    );
+
+    for (let i = 0; i < this.shapes.length; ++i) {
+      this.shapes[i].draw();
+    }
+  }
+}
+
+export class ShapeTool {
   constructor(
     context,
     strokeColor,

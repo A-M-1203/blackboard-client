@@ -1,8 +1,8 @@
 export default class SelectTool {
-  constructor(context) {
+  constructor(context, shapes) {
     this.context = context;
     this.mousePressed = false;
-    this.shapes = undefined;
+    this.shapes = shapes;
     this.selectedShape = undefined;
     this.selectedResizePoint = -1;
     this.draggingOffsetX = undefined;
@@ -15,7 +15,7 @@ export default class SelectTool {
     return this;
   }
 
-  handleMousePress(mouseX, mouseY) {
+  handleMouseDown(mouseX, mouseY) {
     this.mousePressed = true;
     if (this.selectedShape) {
       this.selectedResizePoint = this.selectedShape.isResizePointClicked(
@@ -59,11 +59,11 @@ export default class SelectTool {
     }
   }
 
-  handleMouseRelease(mouseX, mouseY) {
+  handleMouseUp(mouseX, mouseY) {
     this.mousePressed = false;
   }
 
-  handleKeyPress(key) {
+  handleKeyDown(key) {
     if (this.selectedShape) {
       switch (key) {
         case "r":
@@ -116,7 +116,7 @@ export default class SelectTool {
     }
   }
 
-  handleKeyRelease(key) {
+  handleKeyUp(key) {
     switch (key) {
       case "Shift":
         this.shiftPressed = false;

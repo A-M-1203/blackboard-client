@@ -9,7 +9,7 @@ export default class Rectangle extends Shape {
     context,
     strokeColor,
     fillColor,
-    lineWidth
+    lineWidth,
   ) {
     super(
       startX,
@@ -19,7 +19,7 @@ export default class Rectangle extends Shape {
       context,
       strokeColor,
       fillColor,
-      lineWidth
+      lineWidth,
     );
   }
 
@@ -37,13 +37,13 @@ export default class Rectangle extends Shape {
       this.boundingRectangle.points[0].x,
       this.boundingRectangle.points[0].y,
       this.boundingRectangle.width,
-      this.boundingRectangle.height
+      this.boundingRectangle.height,
     );
     this.context.strokeRect(
       this.boundingRectangle.points[0].x + this.lineWidth / 2,
       this.boundingRectangle.points[0].y + this.lineWidth / 2,
       this.boundingRectangle.width - this.lineWidth,
-      this.boundingRectangle.height - this.lineWidth
+      this.boundingRectangle.height - this.lineWidth,
     );
 
     this.context.closePath();

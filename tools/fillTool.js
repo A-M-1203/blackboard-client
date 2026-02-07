@@ -1,8 +1,8 @@
 export default class FillTool {
-  constructor(context, fillColor) {
+  constructor(context, fillColor, shapes) {
     this.context = context;
     this.fillColor = fillColor;
-    this.shapes = undefined;
+    this.shapes = shapes;
   }
 
   activate(shapes) {
@@ -11,7 +11,7 @@ export default class FillTool {
     return this;
   }
 
-  handleMousePress(mouseX, mouseY) {
+  handleMouseDown(mouseX, mouseY) {
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       if (this.shapes[i].isClicked(mouseX, mouseY)) {
         this.shapes[i].fillColor = this.context.fillStyle;
@@ -22,9 +22,9 @@ export default class FillTool {
   }
 
   handleMouseMove(mouseX, mouseY) {}
-  handleMouseRelease(mouseX, mouseY) {}
+  handleMouseUp(mouseX, mouseY) {}
 
-  handleKeyPress(key) {
+  handleKeyDown(key) {
     switch (key) {
       case "r":
         this.context.fillStyle = this.fillColor = "#800000ff";
@@ -41,7 +41,7 @@ export default class FillTool {
     }
   }
 
-  handleKeyRelease(key) {}
+  handleKeyUp(key) {}
 
   drawShapes() {
     this.context.clearRect(

@@ -1,13 +1,13 @@
 import FreeLine from "../shapes/freeLine.js";
 
 export default class PencilTool {
-  constructor(context, strokeColor, lineWidth) {
+  constructor(context, strokeColor, lineWidth, shapes) {
     this.context = context;
     this.strokeColor = strokeColor;
     this.lineWidth = lineWidth;
     this.mousePressed = false;
     this.freeLineCoordinates = [];
-    this.shapes = undefined;
+    this.shapes = shapes;
   }
 
   activate(shapes) {
@@ -18,7 +18,7 @@ export default class PencilTool {
     return this;
   }
 
-  handleMousePress(mouseX, mouseY) {
+  handleMouseDown(mouseX, mouseY) {
     this.mousePressed = true;
     this.context.beginPath();
     this.context.moveTo(mouseX, mouseY);
@@ -32,7 +32,7 @@ export default class PencilTool {
     }
   }
 
-  handleMouseRelease(mouseX, mouseY) {
+  handleMouseUp(mouseX, mouseY) {
     this.mousePressed = false;
     let maxX = -100000;
     let minX = 100000;
@@ -71,7 +71,7 @@ export default class PencilTool {
     );
   }
 
-  handleKeyPress(key) {
+  handleKeyDown(key) {
     switch (key) {
       case "+":
         if (this.lineWidth < 100.0) {
@@ -98,5 +98,5 @@ export default class PencilTool {
     }
   }
 
-  handleKeyRelease(key) {}
+  handleKeyUp(key) {}
 }
