@@ -60,17 +60,69 @@ export default class SelectTool {
   handleKeyDown(key) {
     if (!this.selectedShape) return;
     switch (key) {
-      case "r":
-        this.selectedShape.strokeColor = "#ff0000";
+      case "D":
+        this.selectedShape.fillColor = "#000000";
+        break;
+      case "W":
+        this.selectedShape.fillColor = "#ffffff";
+        break;
+      case "G":
+        this.selectedShape.fillColor = "#008000";
+        break;
+      case "[":
+        this.selectedShape.fillColor = "#90ee90";
+        break;
+      case "B":
+        this.selectedShape.fillColor = "#0000ff";
+        break;
+      case "]":
+        this.selectedShape.fillColor = "#add8e6";
+        break;
+      case "R":
+        this.selectedShape.fillColor = "#ff0000";
+        break;
+      case "Y":
+        this.selectedShape.fillColor = "#ffff00";
+        break;
+      case "O":
+        this.selectedShape.fillColor = "#ffa500";
+        break;
+      case "P":
+        this.selectedShape.fillColor = "#800080";
+        break;
+      case ";":
+        this.selectedShape.fillColor = "#ffc0cb";
+        break;
+      case "M":
+        this.selectedShape.fillColor = "#ff00ff";
+        break;
+
+      case "d":
+        this.selectedShape.strokeColor = "#000000";
+        break;
+      case "w":
+        this.selectedShape.strokeColor = "#ffffff";
         break;
       case "g":
-        this.selectedShape.strokeColor = "#00ff00";
+        this.selectedShape.strokeColor = "#008000";
         break;
       case "b":
         this.selectedShape.strokeColor = "#0000ff";
         break;
-      case "w":
-        this.selectedShape.strokeColor = "#ffffff";
+      case "r":
+        this.selectedShape.strokeColor = "#ff0000";
+        break;
+      case "y":
+        this.selectedShape.strokeColor = "#ffff00";
+        break;
+      case "o":
+        this.selectedShape.strokeColor = "#ffa500";
+        break;
+      case "p":
+        this.selectedShape.strokeColor = "#800080";
+        break;
+      case "m":
+        this.selectedShape.strokeColor = "#ff00ff";
         break;
       case "+":
         if (this.selectedShape.lineWidth < 30.0) {

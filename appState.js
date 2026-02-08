@@ -52,7 +52,7 @@ export default class AppState {
     this.diamondTool = new DiamondTool(this.context, this.shapes);
   }
 
-  addMouseEventListeners(canvas, tools, colors) {
+  addMouseEventListeners(canvas, tools, fillColors, strokeColors) {
     canvas.addEventListener("mousedown", (event) => {
       this.selectedTool.handleMouseDown(event.offsetX, event.offsetY);
     });
@@ -149,93 +149,200 @@ export default class AppState {
       this.selectedTool = this.diamondTool;
     });
 
-    colors[0].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[0].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
-      this.context.fillStyle = "#000000";
+      this.context.fillStyle = "#212020";
+      this.selectedTool.handleKeyDown("D");
     });
-    colors[1].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[1].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#ffffff";
+      this.selectedTool.handleKeyDown("W");
     });
-    colors[2].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[2].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#008000";
+      this.selectedTool.handleKeyDown("G");
     });
-    colors[3].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[3].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#90ee90";
+      this.selectedTool.handleKeyDown("[");
     });
-    colors[4].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[4].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#0000ff";
+      this.selectedTool.handleKeyDown("B");
     });
-    colors[5].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[5].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#add8e6";
+      this.selectedTool.handleKeyDown("]");
     });
-    colors[6].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[6].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#ff0000";
+      this.selectedTool.handleKeyDown("R");
     });
-    colors[7].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[7].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#ffff00";
+      this.selectedTool.handleKeyDown("Y");
     });
-    colors[8].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[8].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#ffa500";
+      this.selectedTool.handleKeyDown("O");
     });
-    colors[9].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[9].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#800080";
+      this.selectedTool.handleKeyDown("P");
     });
-    colors[10].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[10].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#ffc0cb";
+      this.selectedTool.handleKeyDown(";");
     });
-    colors[11].addEventListener("click", (event) => {
-      for (let i = 0; i < colors.length; ++i) {
-        colors[i].classList.remove("selected");
+    fillColors[11].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
       }
       event.currentTarget.classList.add("selected");
       this.context.fillStyle = "#ff00ff";
+      this.selectedTool.handleKeyDown("M");
+    });
+
+    // STROKE COLORS EVENT LISTENERS
+    strokeColors[0].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#212020";
+      this.selectedTool.handleKeyDown("d");
+    });
+    strokeColors[1].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#ffffff";
+      this.selectedTool.handleKeyDown("w");
+    });
+    strokeColors[2].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#008000";
+      this.selectedTool.handleKeyDown("g");
+    });
+    strokeColors[3].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#90ee90";
+    });
+    strokeColors[4].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#0000ff";
+      this.selectedTool.handleKeyDown("b");
+    });
+    strokeColors[5].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#add8e6";
+    });
+    strokeColors[6].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#ff0000";
+      this.selectedTool.handleKeyDown("r");
+    });
+    strokeColors[7].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#ffff00";
+      this.selectedTool.handleKeyDown("y");
+    });
+    strokeColors[8].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#ffa500";
+      this.selectedTool.handleKeyDown("o");
+    });
+    strokeColors[9].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#800080";
+      this.selectedTool.handleKeyDown("p");
+    });
+    strokeColors[10].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#ffc0cb";
+    });
+    strokeColors[11].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle = "#ff00ff";
+      this.selectedTool.handleKeyDown("m");
     });
   }
 
-  addKeyboardEventListeners(tools, colors) {
+  addKeyboardEventListeners(tools, fillColors) {
     window.addEventListener("keydown", (event) => {
       switch (event.key) {
         case "S":
@@ -325,98 +432,98 @@ export default class AppState {
           break;
 
         case "d":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[0].classList.add("selected");
-          this.context.fillStyle = "#000000";
+          fillColors[0].classList.add("selected");
+          this.context.fillStyle = "#212020";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "w":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[1].classList.add("selected");
+          fillColors[1].classList.add("selected");
           this.context.fillStyle = "#ffffff";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "g":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[2].classList.add("selected");
+          fillColors[2].classList.add("selected");
           this.context.fillStyle = "#008000";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "[":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[3].classList.add("selected");
+          fillColors[3].classList.add("selected");
           this.context.fillStyle = "#90ee90";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "b":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[4].classList.add("selected");
+          fillColors[4].classList.add("selected");
           this.context.fillStyle = "#0000ff";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "]":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[5].classList.add("selected");
+          fillColors[5].classList.add("selected");
           this.context.fillStyle = "#add8e6";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "r":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[6].classList.add("selected");
+          fillColors[6].classList.add("selected");
           this.context.fillStyle = "#ff0000";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "y":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[7].classList.add("selected");
+          fillColors[7].classList.add("selected");
           this.context.fillStyle = "#ffff00";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "o":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[8].classList.add("selected");
+          fillColors[8].classList.add("selected");
           this.context.fillStyle = "#ffa500";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "p":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[9].classList.add("selected");
+          fillColors[9].classList.add("selected");
           this.context.fillStyle = "#800080";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case ";":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[10].classList.add("selected");
+          fillColors[10].classList.add("selected");
           this.context.fillStyle = "#ffc0cb";
           this.selectedTool.handleKeyDown(event.key);
           break;
         case "m":
-          for (let i = 0; i < colors.length; ++i) {
-            colors[i].classList.remove("selected");
+          for (let i = 0; i < fillColors.length; ++i) {
+            fillColors[i].classList.remove("selected");
           }
-          colors[11].classList.add("selected");
+          fillColors[11].classList.add("selected");
           this.context.fillStyle = "#ff00ff";
           this.selectedTool.handleKeyDown(event.key);
           break;

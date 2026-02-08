@@ -8,9 +8,10 @@ if (canvas.getContext) {
 
   const appState = new AppState(context);
   const tools = document.querySelectorAll("#tools .item");
-  const colors = document.querySelectorAll("#colors .item");
-  appState.addMouseEventListeners(canvas, tools, colors);
-  appState.addKeyboardEventListeners(tools, colors);
+  const fillColors = document.querySelectorAll("#fill-colors .item");
+  const strokeColors = document.querySelectorAll("#stroke-colors .item");
+  appState.addMouseEventListeners(canvas, tools, fillColors, strokeColors);
+  appState.addKeyboardEventListeners(tools, fillColors);
 } else {
   const body = document.querySelector("body");
   body.textContent = "Canvas not supported";

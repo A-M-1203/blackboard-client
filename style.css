@@ -17,10 +17,11 @@ body {
 .side-panel {
   background-color: #272323;
   border-right: 3px solid #000000;
-  min-width: 150px;
-  max-width: 150px;
+  min-width: 165px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 .sub-panel {
@@ -55,13 +56,8 @@ body {
   border-radius: 50%;
 }
 
-.content {
-  min-width: 35px;
-  border: 2px solid #008000;
-}
-
-.black-color {
-  background-color: #000000;
+.dark-color {
+  background-color: #212020;
 }
 
 .white-color {
