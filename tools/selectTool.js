@@ -125,12 +125,12 @@ export default class SelectTool {
         this.selectedShape.strokeColor = "#ff00ff";
         break;
       case "+":
-        if (this.selectedShape.lineWidth < 30.0) {
+        if (this.selectedShape.lineWidth < 20) {
           this.selectedShape.lineWidth += 1;
         }
         break;
       case "-":
-        if (this.selectedShape.lineWidth > 1.0) {
+        if (this.selectedShape.lineWidth > 1) {
           this.selectedShape.lineWidth -= 1;
         }
         break;

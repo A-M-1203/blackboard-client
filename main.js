@@ -10,8 +10,24 @@ if (canvas.getContext) {
   const tools = document.querySelectorAll("#tools .item");
   const fillColors = document.querySelectorAll("#fill-colors .item");
   const strokeColors = document.querySelectorAll("#stroke-colors .item");
-  appState.addMouseEventListeners(canvas, tools, fillColors, strokeColors);
-  appState.addKeyboardEventListeners(tools, fillColors);
+  const lineWidthSlider = document.querySelector("#line-width-slider");
+  const lineWidthSliderLabel = document.querySelector(
+    'label[for="line-width-slider"]',
+  );
+  appState.addMouseEventListeners(
+    canvas,
+    tools,
+    fillColors,
+    strokeColors,
+    lineWidthSlider,
+    lineWidthSliderLabel,
+  );
+  appState.addKeyboardEventListeners(
+    tools,
+    fillColors,
+    lineWidthSlider,
+    lineWidthSliderLabel,
+  );
 } else {
   const body = document.querySelector("body");
   body.textContent = "Canvas not supported";

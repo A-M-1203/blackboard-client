@@ -52,7 +52,14 @@ export default class AppState {
     this.diamondTool = new DiamondTool(this.context, this.shapes);
   }
 
-  addMouseEventListeners(canvas, tools, fillColors, strokeColors) {
+  addMouseEventListeners(
+    canvas,
+    tools,
+    fillColors,
+    strokeColors,
+    lineWidthSlider,
+    lineWidthSliderLabel,
+  ) {
     canvas.addEventListener("mousedown", (event) => {
       this.selectedTool.handleMouseDown(event.offsetX, event.offsetY);
     });
@@ -340,9 +347,28 @@ export default class AppState {
       this.context.strokeStyle = "#ff00ff";
       this.selectedTool.handleKeyDown("m");
     });
+
+    lineWidthSlider.addEventListener("input", (event) => {
+      const oldValue = +lineWidthSliderLabel.textContent;
+      const newValue = +event.target.value;
+      this.context.lineWidth = newValue;
+      if (newValue > oldValue) {
+        for (let i = 0; i < newValue - oldValue; ++i)
+          this.selectedTool.handleKeyDown("+");
+      } else {
+        for (let i = 0; i < oldValue - newValue; ++i)
+          this.selectedTool.handleKeyDown("-");
+      }
+      lineWidthSliderLabel.textContent = event.target.value;
+    });
   }
 
-  addKeyboardEventListeners(tools, fillColors) {
+  addKeyboardEventListeners(
+    tools,
+    fillColors,
+    lineWidthSlider,
+    lineWidthSliderLabel,
+  ) {
     window.addEventListener("keydown", (event) => {
       switch (event.key) {
         case "S":
@@ -527,12 +553,30 @@ export default class AppState {
           this.context.fillStyle = "#ff00ff";
           this.selectedTool.handleKeyDown(event.key);
           break;
+        case "+":
+          {
+            let value = +lineWidthSlider.value;
+            value += 1;
+            lineWidthSlider.value = value;
+            lineWidthSliderLabel.textContent = lineWidthSlider.value;
+            this.context.lineWidth = value;
+            this.selectedTool.handleKeyDown(event.key);
+          }
+          break;
+        case "-":
+          {
+            let value = +lineWidthSlider.value;
+            value -= 1;
+            lineWidthSlider.value = value;
+            lineWidthSliderLabel.textContent = lineWidthSlider.value;
+            this.context.lineWidth = value;
+            this.selectedTool.handleKeyDown(event.key);
+          }
+          break;
         case "ArrowLeft":
         case "ArrowRight":
         case "ArrowUp":
         case "ArrowDown":
-        case "+":
-        case "-":
         case "Shift":
           this.selectedTool.handleKeyDown(event.key);
           break;
