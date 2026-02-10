@@ -8,8 +8,24 @@ if (canvas.getContext) {
 
   const appState = new AppState(context);
   const tools = document.querySelectorAll("#tools .item");
-  const fillColors = document.querySelectorAll("#fill-colors .item");
-  const strokeColors = document.querySelectorAll("#stroke-colors .item");
+  const fillColors = [...document.querySelectorAll("#fill-colors .item")];
+  const additionalFillColors = fillColors.slice(-6);
+  const fillColorPicker = document.querySelector("#fill-color-picker");
+  const fillColorPickerConfirmButton = document.querySelector(
+    "#fill-color-picker-confirm-btn",
+  );
+  const fillColorPickerRejectButton = document.querySelector(
+    "#fill-color-picker-reject-btn",
+  );
+  const strokeColors = [...document.querySelectorAll("#stroke-colors .item")];
+  const additionalStrokeColors = strokeColors.slice(-6);
+  const strokeColorPicker = document.querySelector("#stroke-color-picker");
+  const strokeColorPickerConfirmButton = document.querySelector(
+    "#stroke-color-picker-confirm-btn",
+  );
+  const strokeColorPickerRejectButton = document.querySelector(
+    "#stroke-color-picker-reject-btn",
+  );
   const lineWidthSlider = document.querySelector("#line-width-slider");
   const lineWidthSliderLabel = document.querySelector(
     'label[for="line-width-slider"]',
@@ -21,6 +37,14 @@ if (canvas.getContext) {
     strokeColors,
     lineWidthSlider,
     lineWidthSliderLabel,
+    additionalFillColors,
+    additionalStrokeColors,
+    fillColorPicker,
+    fillColorPickerConfirmButton,
+    fillColorPickerRejectButton,
+    strokeColorPicker,
+    strokeColorPickerConfirmButton,
+    strokeColorPickerRejectButton,
   );
   appState.addKeyboardEventListeners(
     tools,

@@ -16,6 +16,8 @@ export default class AppState {
     this.context = context;
     this.tools = [];
     this.shapes = [];
+    this.nextAdditionalFillColorIndex = 0;
+    this.nextAdditionalStrokeColorIndex = 0;
 
     this.BACKGROUND_COLOR = "#212020";
     this.STROKE_COLOR = "#ffffff";
@@ -59,6 +61,14 @@ export default class AppState {
     strokeColors,
     lineWidthSlider,
     lineWidthSliderLabel,
+    additionalFillColors,
+    additionalStrokeColors,
+    fillColorPicker,
+    fillColorPickerConfirmButton,
+    fillColorPickerRejectButton,
+    strokeColorPicker,
+    strokeColorPickerConfirmButton,
+    strokeColorPickerRejectButton,
   ) {
     canvas.addEventListener("mousedown", (event) => {
       this.selectedTool.handleMouseDown(event.offsetX, event.offsetY);
@@ -70,6 +80,7 @@ export default class AppState {
       this.selectedTool.handleMouseUp(event.offsetX, event.offsetY);
     });
 
+    // TOOLS EVENT LISTENERS
     tools[0].addEventListener("click", (event) => {
       for (let i = 0; i < tools.length; ++i) {
         tools[i].classList.remove("selected");
@@ -156,6 +167,7 @@ export default class AppState {
       this.selectedTool = this.diamondTool;
     });
 
+    // FILL COLORS EVENT LISTENERS
     fillColors[0].addEventListener("click", (event) => {
       for (let i = 0; i < fillColors.length; ++i) {
         fillColors[i].classList.remove("selected");
@@ -252,6 +264,48 @@ export default class AppState {
       this.context.fillStyle = "#ff00ff";
       this.selectedTool.handleKeyDown("M");
     });
+    fillColors[12].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.fillStyle = additionalFillColors[0].style.backgroundColor;
+    });
+    fillColors[13].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.fillStyle = additionalFillColors[1].style.backgroundColor;
+    });
+    fillColors[14].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.fillStyle = additionalFillColors[2].style.backgroundColor;
+    });
+    fillColors[15].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.fillStyle = additionalFillColors[3].style.backgroundColor;
+    });
+    fillColors[16].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.fillStyle = additionalFillColors[4].style.backgroundColor;
+    });
+    fillColors[17].addEventListener("click", (event) => {
+      for (let i = 0; i < fillColors.length; ++i) {
+        fillColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.fillStyle = additionalFillColors[5].style.backgroundColor;
+    });
 
     // STROKE COLORS EVENT LISTENERS
     strokeColors[0].addEventListener("click", (event) => {
@@ -347,7 +401,56 @@ export default class AppState {
       this.context.strokeStyle = "#ff00ff";
       this.selectedTool.handleKeyDown("m");
     });
+    strokeColors[12].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle =
+        additionalStrokeColors[0].style.backgroundColor;
+    });
+    strokeColors[13].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle =
+        additionalStrokeColors[1].style.backgroundColor;
+    });
+    strokeColors[14].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle =
+        additionalStrokeColors[2].style.backgroundColor;
+    });
+    strokeColors[15].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle =
+        additionalStrokeColors[3].style.backgroundColor;
+    });
+    strokeColors[16].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle =
+        additionalStrokeColors[4].style.backgroundColor;
+    });
+    strokeColors[17].addEventListener("click", (event) => {
+      for (let i = 0; i < strokeColors.length; ++i) {
+        strokeColors[i].classList.remove("selected");
+      }
+      event.currentTarget.classList.add("selected");
+      this.context.strokeStyle =
+        additionalStrokeColors[5].style.backgroundColor;
+    });
 
+    // LINE WIDTH SLIDER EVENT LISTENER
     lineWidthSlider.addEventListener("input", (event) => {
       const oldValue = +lineWidthSliderLabel.textContent;
       const newValue = +event.target.value;
@@ -360,6 +463,64 @@ export default class AppState {
           this.selectedTool.handleKeyDown("-");
       }
       lineWidthSliderLabel.textContent = event.target.value;
+    });
+
+    // FILL COLOR PICKER EVENT LISTENERS
+    fillColorPicker.addEventListener("input", () => {
+      fillColorPickerConfirmButton.disabled = false;
+      fillColorPickerRejectButton.disabled = false;
+      additionalFillColors[
+        this.nextAdditionalFillColorIndex
+      ].style.backgroundColor = fillColorPicker.value;
+    });
+
+    fillColorPickerConfirmButton.addEventListener("click", () => {
+      fillColorPickerConfirmButton.disabled = true;
+      additionalFillColors[
+        this.nextAdditionalFillColorIndex
+      ].style.backgroundColor = fillColorPicker.value;
+      this.nextAdditionalFillColorIndex++;
+      this.nextAdditionalFillColorIndex %= additionalFillColors.length;
+    });
+
+    fillColorPickerRejectButton.addEventListener("click", () => {
+      fillColorPickerConfirmButton.disabled = true;
+      fillColorPicker.value = "#000000";
+      additionalFillColors[
+        this.nextAdditionalFillColorIndex
+      ].style.backgroundColor = "#ffffff";
+      if (this.nextAdditionalFillColorIndex > 0)
+        this.nextAdditionalFillColorIndex--;
+      else fillColorPickerRejectButton.disabled = true;
+    });
+
+    // STROKE COLOR PICKER EVENT LISTENERS
+    strokeColorPicker.addEventListener("input", () => {
+      strokeColorPickerConfirmButton.disabled = false;
+      strokeColorPickerRejectButton.disabled = false;
+      additionalStrokeColors[
+        this.nextAdditionalStrokeColorIndex
+      ].style.backgroundColor = strokeColorPicker.value;
+    });
+
+    strokeColorPickerConfirmButton.addEventListener("click", () => {
+      strokeColorPickerConfirmButton.disabled = true;
+      additionalStrokeColors[
+        this.nextAdditionalStrokeColorIndex
+      ].style.backgroundColor = strokeColorPicker.value;
+      this.nextAdditionalStrokeColorIndex++;
+      this.nextAdditionalStrokeColorIndex %= additionalStrokeColors.length;
+    });
+
+    strokeColorPickerRejectButton.addEventListener("click", () => {
+      strokeColorPickerConfirmButton.disabled = true;
+      strokeColorPicker.value = "#000000";
+      additionalStrokeColors[
+        this.nextAdditionalStrokeColorIndex
+      ].style.backgroundColor = "#ffffff";
+      if (this.nextAdditionalStrokeColorIndex > 0)
+        this.nextAdditionalStrokeColorIndex--;
+      else strokeColorPickerRejectButton.disabled = true;
     });
   }
 
