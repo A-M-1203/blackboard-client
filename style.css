@@ -40,6 +40,9 @@ body {
 }
 
 .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 35px;
   min-height: 35px;
   border: 2px solid #000000;
